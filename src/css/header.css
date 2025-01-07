@@ -1,0 +1,20 @@
+#header-logo{
+
+}
+#Header{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    background-color: #e1dada;
+}
+#header-sub{
+    display: flex;
+    width: 150px;
+}
+#header-logo{
+    margin:auto;
+    font-size: 20px;
+}
+#header-sub p{
+    margin: auto;
+}
