@@ -1,0 +1,77 @@
+/* 전체 폼 스타일 */
+#signupForm {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* 제목 스타일 */
+.heading {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+/* 레이블 스타일 */
+label {
+    display: block;
+    font-size: 1em;
+    margin: 0.5em 0 0.3em;
+    color: #555;
+}
+
+/* 입력 필드 스타일 */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/* 제출 버튼 스타일 */
+input[type="submit"] {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* 링크 스타일 */
+.right .links {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.right .links a {
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 0.5em;
+}
+
+.right .links a:hover {
+    text-decoration: underline;
+}
