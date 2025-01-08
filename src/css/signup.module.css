@@ -1,5 +1,7 @@
+
+
 /* 전체 폼 스타일 */
-#signupForm {
+.signupForm {
     background-color: #fff;
     padding: 2em;
     border-radius: 8px;
@@ -9,6 +11,9 @@
 
     font-family: Arial, sans-serif;
     box-sizing: border-box;
+
+    /* 가로 중앙 정렬 */
+    margin: 0 auto;
 }
 
 /* 제목 스타일 */
@@ -20,7 +25,7 @@
 }
 
 /* 레이블 스타일 */
-label {
+.label {
     display: block;
     font-size: 1em;
     margin: 0.5em 0 0.3em;
@@ -28,11 +33,7 @@ label {
 }
 
 /* 입력 필드 스타일 */
-input[type="email"],
-input[type="password"],
-input[type="text"],
-input[type="tel"],
-input[type="date"] {
+.input {
     width: 100%;
     padding: 0.8em;
     margin-bottom: 1em;
@@ -43,7 +44,7 @@ input[type="date"] {
 }
 
 /* 제출 버튼 스타일 */
-input[type="submit"] {
+.submitButton {
     width: 100%;
     padding: 0.8em;
     background-color: #007bff;
@@ -55,23 +56,65 @@ input[type="submit"] {
     transition: background-color 0.3s;
 }
 
-input[type="submit"]:hover {
+.submitButton:hover {
     background-color: #0056b3;
 }
 
 /* 링크 스타일 */
-.right .links {
+.links {
     margin-top: 1em;
     text-align: center;
 }
 
-.right .links a {
+.links a {
     font-size: 0.9em;
     color: #007bff;
     text-decoration: none;
     margin: 0 0.5em;
 }
 
-.right .links a:hover {
+.links a:hover {
     text-decoration: underline;
+}
+
+/* 소셜 버튼 기본 스타일 */
+.socialButton {
+    display: inline-block;
+    font-size: 1em;
+    text-decoration: none;
+    color: white;
+    width: auto;
+    padding: 0.8em 1.5em;
+    text-align: center;
+    margin: 0.5em 0.2em;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+/* Facebook 버튼 */
+.socialButton.facebook {
+    background-color: #3b5998; /* Facebook 색상 */
+}
+
+.socialButton.facebook:hover {
+    background-color: #2d4373; /* Facebook Hover 색상 */
+}
+
+/* Twitter 버튼 */
+.socialButton.twitter {
+    background-color: #1da1f2; /* Twitter 색상 */
+}
+
+.socialButton.twitter:hover {
+    background-color: #1a91da; /* Twitter Hover 색상 */
+}
+
+/* Google+ 버튼 */
+.socialButton.googlePlus {
+    background-color: #db4437; /* Google+ 색상 */
+}
+
+.socialButton.googlePlus:hover {
+    background-color: #c1351d; /* Google+ Hover 색상 */
 }
