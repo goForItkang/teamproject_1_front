@@ -5,17 +5,48 @@ import styles from '../css/signup.module.css'
 const Signup = () => {
     return (
         <div>
-            <Asd />
+            <SignupForm />
         </div>
     );
 };
 
-const Asd = () => {
+const SignupForm = () => {
+    const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+    const LOGIN_ENDPOINT = '/signup';
+
+    // 폼 제출 처리 함수
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // 기본 폼 제출 방지
+
+        // 폼 데이터를 수집
+        const formData = new FormData(e.target); // e.target은 폼 엘리먼트를 참조
+        const json = Object.fromEntries(formData); // FormData를 객체로 변환
+
+        try {
+            // POST 요청 보내기
+            const response = await fetch(`${BASE_URL}${LOGIN_ENDPOINT}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(json), // JSON 형식으로 변환된 데이터를 전송
+            });
+
+            if (response.ok) {
+                alert('회원가입 성공');
+            } else {
+                alert('회원가입 실패');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+        }
+    };
 
     return (
         <>
             <main>
-                <form action="/login" className={styles.signupForm} method="POST">
+                <form onSubmit={handleSubmit} className={styles.signupForm}>
 
                     <div className={styles.heading}>회원가입</div>
 
@@ -33,9 +64,6 @@ const Asd = () => {
 
                     <label htmlFor="birthday" className={styles.label}>생일</label>
                     <input type="date" id="birthday" name="birthday" className={styles.input} required/>
-
-                    <label htmlFor="address" className={styles.label}>주소</label>
-                    <input type="text" id="address" name="address" className={styles.input} required placeholder="주소를 입력하세요"/>
 
                     <input type="submit" value="회원가입" className={styles.submitButton}/>
 
