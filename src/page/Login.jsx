@@ -13,50 +13,41 @@ const Login = () => {
 };
 
 const LoginForm = () => {
-
-    const [user, setUser] = useState({
-        email: '',
-        password: '',
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser({ ...user, [name]: value });
-    };
-
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-    const LOGIN_ENDPOINT = '/login';
+    const LOGIN_ENDPOINT = '/api/auth/login';
 
-    const handleLogin = async (e) => {
+    // 폼 제출 처리 함수
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // 기본 폼 제출 방지
+
+        // 폼 데이터를 수집
+        const formData = new FormData(e.target);
+        const json = Object.fromEntries(formData);
+
         try {
-            const formData = new FormData();
-            formData.append('email', user.email);
-            formData.append('password', user.password);
-
-            const response = await axios({
-                url: `${BASE_URL}${LOGIN_ENDPOINT}`,
+            // POST 요청 보내기
+            const response = await fetch(`${BASE_URL}${LOGIN_ENDPOINT}`, {
                 method: 'POST',
-                data: formData,
-                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(json), // JSON 형식으로 변환된 데이터를 전송
+                credentials: 'include'
             });
 
-
-            if (response.status === 200) {
-                alert('로그인 성공! (가끔씩 응답이 안오는 경우 있음. 캐시로 인한 것으로 추측 status=304)');
-                // 로그인 성공 후 처리할 작업 (예: JWT 토큰 저장, 페이지 이동 등)
-                // 예시: 로컬 스토리지에 JWT 저장
-                localStorage.setItem('token', response.data.token);
+            if (response.ok) {
+                alert('로그인 성공.');
             } else {
                 alert('로그인 실패');
             }
-        } catch (error) {
-            console.log('로그인 에러: ', error);
+        } catch (err) {
+            console.error(err);
+            alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
         }
     };
-
     return (
         <>
-            <form onSubmit={handleLogin} className={styles['login-form']}>
+            <form onSubmit={handleSubmit} className={styles['login-form']}>
                 <div className={styles.heading}>로그인</div>
 
                 <label htmlFor="email" className={styles.label}>이메일</label>
@@ -64,8 +55,6 @@ const LoginForm = () => {
                     type="email"
                     id="email"
                     name="email"
-                    value={user.email}
-                    onChange={handleChange}
                     className={styles.input}
                     required
                     placeholder="이메일을 입력하세요"
@@ -76,8 +65,6 @@ const LoginForm = () => {
                     type="password"
                     id="password"
                     name="password"
-                    value={user.password}
-                    onChange={handleChange}
                     className={styles.input}
                     required
                     placeholder="비밀번호를 입력하세요"
