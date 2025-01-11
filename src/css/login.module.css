@@ -1,0 +1,145 @@
+
+
+/* 컨테이너 스타일 */
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+}
+
+
+.login-form {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+
+    /* 가로 중앙 정렬 */
+    margin: 0 auto;
+}
+
+/* 제목 스타일 */
+.heading {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+/* 레이블 스타일 */
+.label {
+    font-size: 1.1em;
+    margin-top: 1em;
+    display: block;
+    color: #555;
+}
+
+/* 입력 필드 스타일 */
+.input {
+    width: 100%;
+    padding: 0.8em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* 제출 버튼 스타일 */
+.submit-button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* 소셜 로그인 컨테이너 */
+.right .connect {
+    color: gray;
+    font-size: 1.1em;
+    text-align: center;
+    margin-top: 1em;
+}
+
+/* 소셜 로그인 버튼 */
+.social-button {
+    display: inline-block;
+    font-size: 1em;
+    text-decoration: none;
+    color: white;
+    width: auto;
+    padding: 0.8em 1.5em;
+    text-align: center;
+    margin: 0.5em 0.2em;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.facebook {
+    background-color: #3b5998;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    padding-left: 35px;
+}
+
+.twitter {
+    background-color: #00acee;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/60/Twitter_Logo_As_of_2021.svg');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    padding-left: 35px;
+}
+
+.googlePlus {
+    background-color: #db4437;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/09/Google_Plus_logo_2023.svg');
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    padding-left: 35px;
+}
+
+.social-button:hover {
+    opacity: 0.8;
+}
+
+/* 회원가입과 비밀번호 찾기 링크 */
+.links {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.links a {
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 0.5em;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
