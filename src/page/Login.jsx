@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import styles from '../css/login.module.css'
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 
 const Login = () => {
@@ -79,8 +80,8 @@ const LoginForm = () => {
                     <a href="#" className={`${styles['social-button']} ${styles.googlePlus}`}>Google+</a>
 
                     <div className={styles.links}>
-                        <a href="#">회원가입</a> |
-                        <a href="#">비밀번호 찾기</a>
+                        <Link href="#">회원가입</Link> |
+                        <Link href="#">비밀번호 찾기</Link>
                     </div>
                 </div>
             </form>
