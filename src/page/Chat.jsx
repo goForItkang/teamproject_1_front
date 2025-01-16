@@ -2,15 +2,16 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 const Chat = () => {
-    const [connected, setConnected] = useState(false);
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState(''); // 새로운 메시지를 위한 상태 추가
-    const [stompClient, setStompClient] = useState(null); // stompClient 상태 추가
-    const {userName}=  useParams();
-    const decodeUserName = decodeURIComponent(userName);
+    const [connected, setConnected] = useState(false); // WebSocket 연결 상태
+    const [messages, setMessages] = useState([]); // 메시지 목록
+    const [message, setMessage] = useState(''); // 입력 메시지
+    const [stompClient, setStompClient] = useState(null); // Stomp 클라이언트
+    const { userName } = useParams();
+    const decodeUserName = decodeURIComponent(userName); // URL에서 사용자 이름 디코딩
+
     useEffect(() => {
         const jwtToken = Cookies.get('JwtCookie');
 
@@ -22,21 +23,19 @@ const Chat = () => {
         const socket = new SockJS('http://localhost:8080/ws/chat');
         const client = Stomp.over(socket);
 
-        // WebSocket 연결 시 Authorization 헤더에 JWT 토큰 추가
         client.connect(
             { Authorization: `Bearer ${jwtToken}` },
             () => {
                 console.log('WebSocket 연결 성공');
                 setConnected(true);
-                // console.log("userName확인 부분",decodeUserName); checking*
-                // 채팅 주소 /sub/chat/1
+
+                // 수신자 경로 구독
                 client.subscribe(`/sub/chat/${decodeUserName}`, (response) => {
-                    const newMessage = response.body;
+                    const newMessage = JSON.parse(response.body);
+                    console.log('수신 메시지:', newMessage);
                     setMessages((prevMessages) => [...prevMessages, newMessage]);
-                    console.log('WebSocket 메시지:', newMessage);
                 });
 
-                // stompClient 저장
                 setStompClient(client);
             },
             (error) => {
@@ -52,14 +51,16 @@ const Chat = () => {
                 });
             }
         };
-    }, []);
+    }, [decodeUserName]);
 
     const sendMessage = () => {
         if (!message.trim()) return; // 빈 메시지 방지
+
         const chatDTO = {
-            userId: "", // 예시로 1로 설정, 실제로는 로그인한 사용자 ID를 사용
-            message: message,
+            username: decodeUserName,
+            message,
             sentAt: new Date().toISOString(),
+            isFromAdmin: false, // 기본값으로 일반 사용자
         };
 
         const jwtToken = Cookies.get('JwtCookie');
@@ -69,33 +70,41 @@ const Chat = () => {
         }
 
         if (stompClient) {
-            // 메시지 전송 시에도 Authorization 헤더에 JWT 토큰을 추가
             stompClient.send(
-                '/pub/chat/message',
-                { Authorization: `Bearer ${jwtToken}` }, // JWT 토큰 포함
+                `/pub/chat/${decodeUserName}`,
+                { Authorization: `Bearer ${jwtToken}` },
                 JSON.stringify(chatDTO)
             );
-            setMessage(''); // 메시지 전송 후 입력창 초기화
+
+            // 내가 보낸 메시지를 바로 추가
+            setMessages((prevMessages) => [...prevMessages, { ...chatDTO, isFromAdmin: false }]);
+            setMessage('');
         }
     };
 
     return (
         <div>
             <h2>Chat</h2>
-            {connected ? (
-                <p>WebSocket 연결됨</p>
-            ) : (
-                <p>WebSocket 연결 대기 중...</p>
-            )}
+            {connected ? <p>WebSocket 연결됨</p> : <p>WebSocket 연결 대기 중...</p>}
+
             <div>
                 {messages.map((msg, index) => (
-                    <p key={index}>{msg}</p>
+                    <p
+                        key={index}
+                        style={{
+                            color: msg.isFromAdmin ? 'red' : 'black', // 관리자 메시지는 빨간색
+                            fontWeight: msg.isFromAdmin ? 'bold' : 'normal',
+                        }}
+                    >
+                        <strong>{msg.username}: </strong>{msg.message}
+                    </p>
                 ))}
             </div>
+
             <div>
                 <textarea
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)} // 입력값 상태 업데이트
+                    onChange={(e) => setMessage(e.target.value)}
                     placeholder="메시지를 입력하세요"
                     rows="3"
                     style={{ width: '100%' }}

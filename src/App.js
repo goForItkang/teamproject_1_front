@@ -7,6 +7,7 @@ import Chat from "./page/Chat";
 import Login from "./page/Login";
 import Signup from "./page/Signup";
 import Shop from "./page/Shop";
+import AdminHome from "./adminpage/AdminHome";
 
 function App() {
   return (
@@ -14,13 +15,12 @@ function App() {
         <Header></Header>
         <BrowserRouter>
             <Routes>
-                <Route>
                     <Route path="/" element={<Main />} />
                     <Route path="/chat/:userName" element={<Chat/>}/>
                     <Route path={"/login"} element={<Login/>}/>
                     <Route path={"/signup"} element={<Signup/>}/>
                     <Route path={"/shop"} element={<Shop/>}/>
-                </Route>
+                    <Route path={"/admin/*"} element={<AdminHome/>}/>
             </Routes>
         </BrowserRouter>
     </div>

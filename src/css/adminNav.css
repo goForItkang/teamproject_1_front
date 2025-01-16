@@ -1,0 +1,23 @@
+
+.admin-home-li {
+
+}
+.admin-home-div>div{
+    display: none;
+}
+.admin-home-div:hover >div{
+    display: block;
+    transition-delay: 3s;
+}
+.admin-home-div{
+    /*background-color: black;*/
+    margin-top: 40px;
+    margin-left: 20px;
+}
+#admin-nav{
+    margin-left: 5px;
+    width: 200px;
+    background-color: beige;
+    height: 90vh;
+    border-radius: 10px;
+}
