@@ -83,36 +83,135 @@ const Chat = () => {
     };
 
     return (
-        <div>
-            <h2>Chat</h2>
-            {connected ? <p>WebSocket 연결됨</p> : <p>WebSocket 연결 대기 중...</p>}
+        <div style={styles.chatContainer}>
+            <h2 style={styles.header}>채팅</h2>
+            {connected ? (
+                <p style={styles.status}>WebSocket 연결됨</p>
+            ) : (
+                <p style={styles.status}>WebSocket 연결 대기 중...</p>
+            )}
 
-            <div>
+            <div style={styles.messagesContainer}>
                 {messages.map((msg, index) => (
-                    <p
+                    <div
                         key={index}
                         style={{
-                            color: msg.isFromAdmin ? 'red' : 'black', // 관리자 메시지는 빨간색
-                            fontWeight: msg.isFromAdmin ? 'bold' : 'normal',
+                            ...styles.messageContainer,
+                            alignSelf: msg.isFromAdmin ? 'flex-start' : 'flex-end', // 상대방은 왼쪽, 나의 메시지는 오른쪽
                         }}
                     >
-                        <strong>{msg.username}: </strong>{msg.message}
-                    </p>
+                        <div style={styles.messageWrapper}>
+                            <p
+                                style={{
+                                    ...styles.message,
+                                    color: msg.isFromAdmin ? 'red' : 'black',
+                                    fontWeight: msg.isFromAdmin ? 'bold' : 'normal',
+                                }}
+                            >
+                                <strong>{msg.username}: </strong>{msg.message}
+                            </p>
+                            <span style={styles.time}>{new Date(msg.sentAt).toLocaleTimeString()}</span> {/* 시간 표시 */}
+                        </div>
+                    </div>
                 ))}
             </div>
 
-            <div>
+            <div style={styles.inputContainer}>
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="메시지를 입력하세요"
                     rows="3"
-                    style={{ width: '100%' }}
+                    style={styles.textArea}
                 />
-                <button onClick={sendMessage}>보내기</button>
+                <button onClick={sendMessage} style={styles.sendButton}>
+                    보내기
+                </button>
             </div>
         </div>
     );
+};
+
+const styles = {
+    chatContainer: {
+        width: '100%',
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '20px',
+        backgroundColor: '#f9f9f9',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    },
+    header: {
+        textAlign: 'center',
+        fontSize: '24px',
+        marginBottom: '20px',
+    },
+    status: {
+        textAlign: 'center',
+        fontSize: '16px',
+        color: '#888',
+    },
+    messagesContainer: {
+        marginBottom: '20px',
+        padding: '10px',
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.1)',
+        maxHeight: '400px',
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    messageContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginBottom: '15px',
+        maxWidth: '80%', // 최대 너비
+    },
+    messageWrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        marginBottom: '5px',
+    },
+    message: {
+        padding: '5px 0',
+        lineHeight: '1.5',
+        wordBreak: 'break-word',
+        maxWidth: '80%',
+        borderRadius: '5px',
+    },
+    time: {
+        fontSize: '12px',
+        color: '#888',
+        marginTop: '5px',
+        alignSelf: 'flex-end',
+    },
+    inputContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    textArea: {
+        width: '100%',
+        padding: '10px',
+        borderRadius: '5px',
+        border: '1px solid #ddd',
+        marginBottom: '10px',
+        fontSize: '16px',
+        resize: 'none',
+    },
+    sendButton: {
+        alignSelf: 'flex-end',
+        padding: '10px 20px',
+        backgroundColor: '#4CAF50',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        transition: 'background-color 0.3s',
+    },
 };
 
 export default Chat;
