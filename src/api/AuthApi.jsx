@@ -15,6 +15,10 @@ export const validatePassword = async (password) => {
             body: JSON.stringify({password}),
             credentials: 'include'
         });
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
 
         return response.ok;
     } catch (error) {

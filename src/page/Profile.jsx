@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {getUser, patchUser, patchPassword} from '../api/UserApi';
 import {validatePassword} from '../api/AuthApi';
-import styles from "../css/mypage.module.css";
+import styles from "../css/profile.module.css";
 
-const MyPage = () => {
+const Profile = () => {
     return (
         <div className={styles.pageContainer}>
 
             <MenuBar/>
 
             <div className={styles.formWrapper}>
-                <Profile/> {/* 회원 정보 수정 폼 */}
+                <ProfileEdit/> {/* 회원 정보 수정 폼 */}
             </div>
 
             <div className={styles.formWrapper}>
@@ -35,7 +35,7 @@ const MenuBar = () => {
 }
 
 
-const Profile = () => {
+const ProfileEdit = () => {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -252,4 +252,4 @@ const PasswordForm = () =>{
     ;
 }
 
-export default MyPage;
+export default Profile;

@@ -5,6 +5,8 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 
 
+
+
 const Login = () => {
     return (
         <div>
@@ -75,13 +77,13 @@ const LoginForm = () => {
 
                 <div className={styles.right}>
                     <div className={styles.connect}>소셜 로그인</div>
-                    <a href="#" className={`${styles['social-button']} ${styles.facebook}`}>Facebook</a>
-                    <a href="#" className={`${styles['social-button']} ${styles.twitter}`}>Twitter</a>
-                    <a href="#" className={`${styles['social-button']} ${styles.googlePlus}`}>Google+</a>
+                    <Link to ="#" className={`${styles['social-button']} ${styles.facebook}`}>Facebook</Link>
+                    <Link to ="#" className={`${styles['social-button']} ${styles.twitter}`}>Twitter</Link>
+                    <Link to ="#" className={`${styles['social-button']} ${styles.googlePlus}`}>Google+</Link>
 
                     <div className={styles.links}>
-                        <Link href="#">회원가입</Link> |
-                        <Link href="#">비밀번호 찾기</Link>
+                        <Link to="#">회원가입</Link> |
+                        <Link to="#">비밀번호 찾기</Link>
                     </div>
                 </div>
             </form>
