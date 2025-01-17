@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../css/signup.module.css'
+import {Link} from "react-router-dom";
 
 
 const Signup = () => {
@@ -12,9 +13,9 @@ const Signup = () => {
 
 const SignupForm = () => {
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-    const LOGIN_ENDPOINT = '/signup';
+    const LOGIN_ENDPOINT = '/api/signup';
 
-    // 폼 제출 처리 함수
+    // 폼 제출 처리 함수.
     const handleSubmit = async (e) => {
         e.preventDefault(); // 기본 폼 제출 방지
 
@@ -75,8 +76,8 @@ const SignupForm = () => {
                         <a href="#" className={`${styles.socialButton} ${styles.googlePlus}`}>Google+</a>
 
                         <div className={styles.links}>
-                            <a href="#">로그인</a> |
-                            <a href="#">비밀번호 찾기</a>
+                            <Link to="#">로그인</Link> |
+                            <Link to="#">비밀번호 찾기</Link>
                         </div>
                     </div>
                 </form>

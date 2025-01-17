@@ -1,0 +1,148 @@
+/* 전체 컨테이너 스타일 */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 제목 스타일 */
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 로딩 및 오류 메시지 스타일 */
+.loading, .error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* 상품 리스트 스타일 */
+.itemList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.itemList li {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.itemList li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.itemList li h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.itemList li p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: #007bff;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* 상품 수정/삭제 버튼 스타일 */
+.editButton, .deleteButton {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.editButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+}
+
+.deleteButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+}
+
+.editButton:hover {
+    background-color: #45a049;
+}
+
+.deleteButton:hover {
+    background-color: #d32f2f;
+}
+
+/* 페이지 선택 스타일 */
+.sizeSelect {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sizeSelect select {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}

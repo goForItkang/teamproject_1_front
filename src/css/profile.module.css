@@ -1,0 +1,90 @@
+/* 전체 컨테이너 스타일 */
+.pageContainer {
+    display: flex;
+    justify-content: space-between; /* 요소들 가로로 나란히 배치 */
+    padding: 2em;
+    gap: 20px; /* 폼 간 간격 */
+    width: 100%; /* 가로를 꽉 채우도록 */
+    box-sizing: border-box;
+}
+
+/* 메뉴바 스타일 */
+.menuBar {
+    background-color: #f8f9fa;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1; /* 가로 비율 1 */
+    max-width: 250px; /* 메뉴바의 고정 너비 */
+    flex-shrink: 0; /* 메뉴바의 크기가 줄어들지 않게 */
+}
+
+/* 메뉴 아이템 스타일 */
+.menuItem {
+    display: block;
+    font-size: 1.2em;
+    color: #007bff;
+    margin-bottom: 1em;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.menuItem:hover {
+    color: #0056b3;
+}
+
+/* 폼들(회원 정보 수정, 비밀번호 수정)을 가로로 배치 */
+.formWrapper {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 2; /* 가로 비율 2 */
+    max-width: 600px; /* 각 폼의 최대 너비 */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* 제목 스타일 */
+.heading {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+/* 레이블 스타일 */
+.label {
+    display: block;
+    font-size: 1em;
+    margin: 0.5em 0 0.3em;
+    color: #555;
+}
+
+/* 입력 필드 스타일 */
+.input {
+    width: 100%;
+    padding: 0.8em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/* 제출 버튼 스타일 */
+.submitButton {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
