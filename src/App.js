@@ -13,6 +13,7 @@ import ItemAdd from "./page/ItemAdd";
 import ItemList from "./page/ItemList";
 import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
+import axios from "axios";
 
 function App() {
   return (

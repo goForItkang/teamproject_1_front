@@ -1,16 +1,50 @@
+import { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 const Chat = () => {
-    const [connected, setConnected] = useState(false); // WebSocket 연결 상태
+    const [connected, setConnected] = useState(false); // WebSocket 연결 여부
     const [messages, setMessages] = useState([]); // 메시지 목록
     const [message, setMessage] = useState(''); // 입력 메시지
-    const [stompClient, setStompClient] = useState(null); // Stomp 클라이언트
-    const { userName } = useParams();
-    const decodeUserName = decodeURIComponent(userName); // URL에서 사용자 이름 디코딩
+    const [stompClient, setStompClient] = useState(null); // STOMP 클라이언트
+    const { userName } = useParams(); // URL에서 사용자 이름 가져오기
+    const decodeUserName = decodeURIComponent(userName); // 디코딩된 사용자 이름
+    const messageEndRef = useRef(null); // 메시지 자동 스크롤
+
+    // localStorage에서 role 정보 가져오기
+    const role = localStorage.getItem('role');  // [ROLE_USER] 또는 [ROLE_ADMIN]
+
+    useEffect(() => {
+        const jwtToken = Cookies.get('JwtCookie'); // JWT 토큰 가져오기
+
+        axios
+            .get(`http://localhost:8080/api/chat/${decodeUserName}`, {
+                headers: { Authorization: `Bearer ${jwtToken}` },
+            })
+            .then((res) => {
+                const history = res.data.map((msg) => ({
+                    ...msg,
+                }));
+
+                // 기존 메시지와 새로 받은 메시지가 중복되지 않도록 처리
+                setMessages((prevMessages) => {
+                    const newMessages = history.filter(
+                        (msg) => !prevMessages.some(
+                            (existingMsg) => existingMsg.sentAt === msg.sentAt
+                        )
+                    );
+                    return [...prevMessages, ...newMessages].sort(
+                        (a, b) => new Date(a.sentAt) - new Date(b.sentAt)
+                    );
+                });
+            })
+            .catch((err) => {
+                console.error('채팅 기록 로드 실패:', err);
+            });
+    }, [decodeUserName]);
 
     useEffect(() => {
         const jwtToken = Cookies.get('JwtCookie');
@@ -20,23 +54,38 @@ const Chat = () => {
             return;
         }
 
-        const socket = new SockJS('http://localhost:8080/ws/chat');
+        const socket = new SockJS('http://localhost:8080/ws/chat'); // SockJS 연결
         const client = Stomp.over(socket);
 
         client.connect(
             { Authorization: `Bearer ${jwtToken}` },
             () => {
-                console.log('WebSocket 연결 성공');
                 setConnected(true);
 
-                // 수신자 경로 구독
                 client.subscribe(`/sub/chat/${decodeUserName}`, (response) => {
-                    const newMessage = JSON.parse(response.body);
-                    console.log('수신 메시지:', newMessage);
-                    setMessages((prevMessages) => [...prevMessages, newMessage]);
+                    const receivedMessage = JSON.parse(response.body);
+                    // 화면에 표시할 메시지 추가
+                    setMessages((prev) => {
+                        // 본인이 보낸 메시지는 추가하지 않음
+                        if (receivedMessage.sender !== Cookies.get('username')) {
+                            // 새로운 메시지가 이미 존재하는지 체크
+                            const exists = prev.some(
+                                (msg) =>
+                                    msg.sender === receivedMessage.sender &&
+                                    msg.message === receivedMessage.message &&
+                                    msg.sentAt === receivedMessage.sentAt
+                            );
+                            if (!exists) {
+                                return [...prev, receivedMessage].sort(
+                                    (a, b) => new Date(a.sentAt) - new Date(b.sentAt)
+                                );
+                            }
+                        }
+                        return prev;
+                    });
                 });
 
-                setStompClient(client);
+                setStompClient(client); // STOMP 클라이언트 설정
             },
             (error) => {
                 console.error('WebSocket 연결 실패:', error);
@@ -46,172 +95,84 @@ const Chat = () => {
         return () => {
             if (client) {
                 client.disconnect(() => {
-                    console.log('WebSocket 연결 종료');
                     setConnected(false);
                 });
             }
         };
     }, [decodeUserName]);
 
-    const sendMessage = () => {
-        if (!message.trim()) return; // 빈 메시지 방지
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
-        const chatDTO = {
-            username: decodeUserName,
-            message,
-            sentAt: new Date().toISOString(),
-            isFromAdmin: false, // 기본값으로 일반 사용자
-        };
+    const sendMessage = () => {
+        if (!message.trim()) return;
 
         const jwtToken = Cookies.get('JwtCookie');
-        if (!jwtToken) {
-            console.error('JWT 토큰이 없습니다.');
-            return;
-        }
+        const currentUserName = Cookies.get('username');
+
+        const chatDTO = {
+            sender: currentUserName,
+            message,
+            sentAt: new Date().toISOString(),
+            fromAdmin: role === '[ROLE_ADMIN]',  // 관리자일 경우 true
+        };
 
         if (stompClient) {
+            // 서버로 메시지 전송 (화면에 표시하지 않음)
             stompClient.send(
                 `/pub/chat/${decodeUserName}`,
                 { Authorization: `Bearer ${jwtToken}` },
                 JSON.stringify(chatDTO)
             );
 
-            // 내가 보낸 메시지를 바로 추가
-            setMessages((prevMessages) => [...prevMessages, { ...chatDTO, isFromAdmin: false }]);
-            setMessage('');
+            setMessage(''); // 메시지 입력창 비우기
         }
     };
 
     return (
-        <div style={styles.chatContainer}>
-            <h2 style={styles.header}>채팅</h2>
-            {connected ? (
-                <p style={styles.status}>WebSocket 연결됨</p>
-            ) : (
-                <p style={styles.status}>WebSocket 연결 대기 중...</p>
-            )}
+        <div>
+            <h2>채팅</h2>
+            <div style={{ height: '400px', overflowY: 'auto' }}>
+                {messages.map((msg, idx) => {
+                    let align = 'flex-start'; // 기본값은 왼쪽
+                    if (role === '[ROLE_ADMIN]') {
+                        align = msg.fromAdmin ? 'flex-end' : 'flex-start'; // 관리자일 경우
+                    } else if (role === '[ROLE_USER]') {
+                        align = msg.fromAdmin ? 'flex-start' : 'flex-end'; // 사용자의 경우
+                    }
 
-            <div style={styles.messagesContainer}>
-                {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        style={{
-                            ...styles.messageContainer,
-                            alignSelf: msg.isFromAdmin ? 'flex-start' : 'flex-end', // 상대방은 왼쪽, 나의 메시지는 오른쪽
-                        }}
-                    >
-                        <div style={styles.messageWrapper}>
-                            <p
-                                style={{
-                                    ...styles.message,
-                                    color: msg.isFromAdmin ? 'red' : 'black',
-                                    fontWeight: msg.isFromAdmin ? 'bold' : 'normal',
-                                }}
-                            >
-                                <strong>{msg.username}: </strong>{msg.message}
-                            </p>
-                            <span style={styles.time}>{new Date(msg.sentAt).toLocaleTimeString()}</span> {/* 시간 표시 */}
+                    return (
+                        <div
+                            key={idx}
+                            style={{
+                                display: 'flex',
+                                justifyContent: align,
+                                marginBottom: '10px',
+                            }}
+                        >
+                            <div style={{ maxWidth: '60%' }}>
+                                <p style={{ margin: 0 }}>
+                                    <strong>{msg.sender}:</strong> {msg.message}
+                                </p>
+                                <small style={{ color: 'gray', fontSize: '0.8rem' }}>
+                                    {new Date(msg.sentAt).toLocaleString()}
+                                </small>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
+                <div ref={messageEndRef} />
             </div>
-
-            <div style={styles.inputContainer}>
-                <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="메시지를 입력하세요"
-                    rows="3"
-                    style={styles.textArea}
-                />
-                <button onClick={sendMessage} style={styles.sendButton}>
-                    보내기
-                </button>
-            </div>
+            <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="메시지를 입력하세요"
+                style={{ width: '100%', height: '60px' }}
+            />
+            <button onClick={sendMessage}>보내기</button>
         </div>
     );
-};
-
-const styles = {
-    chatContainer: {
-        width: '100%',
-        maxWidth: '600px',
-        margin: '0 auto',
-        padding: '20px',
-        backgroundColor: '#f9f9f9',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    header: {
-        textAlign: 'center',
-        fontSize: '24px',
-        marginBottom: '20px',
-    },
-    status: {
-        textAlign: 'center',
-        fontSize: '16px',
-        color: '#888',
-    },
-    messagesContainer: {
-        marginBottom: '20px',
-        padding: '10px',
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        boxShadow: 'inset 0 0 5px rgba(0, 0, 0, 0.1)',
-        maxHeight: '400px',
-        overflowY: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    messageContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginBottom: '15px',
-        maxWidth: '80%', // 최대 너비
-    },
-    messageWrapper: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        marginBottom: '5px',
-    },
-    message: {
-        padding: '5px 0',
-        lineHeight: '1.5',
-        wordBreak: 'break-word',
-        maxWidth: '80%',
-        borderRadius: '5px',
-    },
-    time: {
-        fontSize: '12px',
-        color: '#888',
-        marginTop: '5px',
-        alignSelf: 'flex-end',
-    },
-    inputContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    textArea: {
-        width: '100%',
-        padding: '10px',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-        marginBottom: '10px',
-        fontSize: '16px',
-        resize: 'none',
-    },
-    sendButton: {
-        alignSelf: 'flex-end',
-        padding: '10px 20px',
-        backgroundColor: '#4CAF50',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '16px',
-        transition: 'background-color 0.3s',
-    },
 };
 
 export default Chat;

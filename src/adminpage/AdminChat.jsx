@@ -28,7 +28,7 @@ const AdminChat = () => {
             {chatList.length>0 ? (
                 <div>
                     {chatList.map((userName,index)=>(
-                        <Link to={`/chat/${encodeURIComponent("username: "+userName)}`}>{userName}</Link>
+                        <Link to={`/chat/${encodeURIComponent("username: "+userName)}`}>{"userName"}</Link>
                     ))}
                 </div>
             ):(<p>문의 내역이 없습니다 </p>)}
