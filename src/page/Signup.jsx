@@ -71,9 +71,9 @@ const SignupForm = () => {
 
                     <div className={styles.right}>
                         <div className={styles.connect}>소셜 로그인</div>
-                        <a href="#" className={`${styles.socialButton} ${styles.facebook}`}>Facebook</a>
-                        <a href="#" className={`${styles.socialButton} ${styles.twitter}`}>Twitter</a>
-                        <a href="#" className={`${styles.socialButton} ${styles.googlePlus}`}>Google+</a>
+                        <Link to="#" className={`${styles.socialButton} ${styles.facebook}`}>Facebook</Link>
+                        <Link to="#" className={`${styles.socialButton} ${styles.twitter}`}>Twitter</Link>
+                        <Link to="#" className={`${styles.socialButton} ${styles.googlePlus}`}>Google+</Link>
 
                         <div className={styles.links}>
                             <Link to="#">로그인</Link> |

@@ -24,6 +24,16 @@ export const getRole = () => {
     }
 };
 
+export const getEmail = () => {
+    try {
+        const decoded = jwtDecode(getJwt()); // 페이로드 디코딩
+        return decoded.sub; // ROLE 정보 추출
+    } catch (error) {
+        console.error("JWT 파싱 실패:", error);
+        return null;
+    }
+};
+
 
 
 // // JWT 쿠키를 설정하는 함수 (옵션 추가 가능)
