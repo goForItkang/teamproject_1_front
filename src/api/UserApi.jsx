@@ -28,6 +28,30 @@ export const getUser = async () => {
 };
 
 
+
+export const getUserByEmail = async (email) => {
+    const ENDPOINT = `/api/user/${email}`
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};
+
+
 export const patchUser = async (user) => {
     const ENDPOINT = '/api/user'
     try {

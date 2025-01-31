@@ -63,7 +63,7 @@ const ItemDetailForm = () => {
                 <div className={styles.extraInfo}>
                     <p>브랜드: {item.itemBrand}</p>
                     <p>카테고리: {item.category}</p>
-                    <p>평점: {item.itemRating}</p>
+                    <p>평점: {item.averageRating}</p>
                 </div>
             </div>
         </div>
@@ -80,6 +80,7 @@ const CommentForm = () => {
     const [editingComment, setEditingComment] = useState(null);
     const [updatedComment, setUpdatedComment] = useState('');
     const [email, setEmail] = useState('');
+    const [newRating, setNewRating] = useState(0);
 
     useEffect(() => {
         const email = getEmail();
@@ -96,9 +97,17 @@ const CommentForm = () => {
     }, [itemId]);
 
     const handleCommentSubmit = async () => {
+        if (newRating === 0) {
+            alert("평점을 입력하세요")
+            return;
+        }
+
         if (!newComment) return;
 
-        const commentData = { content: newComment };
+        const commentData = {
+            content: newComment,
+            rating : newRating
+        };
         const success = await createComment(itemId, commentData);
 
         if (success) {
@@ -207,11 +216,13 @@ const CommentForm = () => {
         }
     };
 
+
+
     return (
         <div className={styles.commentSection}>
             <h2>댓글 작성</h2>
 
-            {/*<RatingTool/>*/}
+            <RatingTool selectedRating={newRating} setSelectedRating={setNewRating}/>
             <textarea
                 className={styles.textarea}
                 value={newComment}
@@ -229,6 +240,7 @@ const CommentForm = () => {
 
                         <div className={styles.commentHeader}>
                             <strong>{comment.email}</strong> ({new Date(comment.created_date).toLocaleString()})
+                            {` - 평점 : ${comment.rating}`}
                         </div>
                         {editingComment?.id === comment.id ? (
                             <div className={styles.editComment}>

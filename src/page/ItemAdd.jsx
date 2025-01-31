@@ -55,8 +55,11 @@ const ItemForm = () => {
         try {
             const response = await createItem(form);
 
-            if (response) {
+            if (response.ok) {
                 alert('상품 저장 성공');
+            }
+            else{
+                alert('상품 저장 실패')
             }
         } catch (err) {
             console.error(err);

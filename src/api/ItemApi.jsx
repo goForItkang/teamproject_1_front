@@ -19,12 +19,13 @@ export const createItem = async (itemForm) => {
             credentials: 'include'
         });
 
+        console.table(response)
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(errorMessage);
         }
 
-        return response.ok;
+        return response
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }

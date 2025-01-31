@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+
 import styles from '../css/RatingTool.module.css';
 
-const RatingTool = () => {
+const RatingTool = ({ selectedRating, setSelectedRating }) => {
     const totalStars = 5;
-    const [selectedRating, setSelectedRating] = useState(0);
+
 
     const renderStars = () => {
         return Array.from({ length: totalStars }, (_, index) => {
