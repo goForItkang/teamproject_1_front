@@ -1,11 +1,11 @@
 import { getJwt } from '../utils/Jwt';
 
-//
+
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 const jwt = getJwt();
 
-export const getUser = async () => {
-    const ENDPOINT = '/api/user'
+export const getLikes = async (commentId) => {
+    const ENDPOINT = `/api/comment/${commentId}/like`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'GET',
@@ -28,40 +28,16 @@ export const getUser = async () => {
 };
 
 
-
-export const getUserByEmail = async (email) => {
-    const ENDPOINT = `/api/user/${email}`
+export const postLike = async (commentId) => {
+    const ENDPOINT = `/api/comment/like?commentId=${commentId}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': jwt
             },
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
-            return null;
-        }
-
-        return await response.json();
-    } catch (error) {
-        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
-    }
-};
-
-
-export const patchUser = async (user) => {
-    const ENDPOINT = '/api/user'
-    try {
-        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': jwt
-            },
-            body: JSON.stringify({...user}),
+            // body: JSON.stringify(commentId),
             credentials: 'include'
         });
 
@@ -71,23 +47,23 @@ export const patchUser = async (user) => {
             throw new Error(errorMessage);
         }
 
-        return await response.text();
+        return response.ok;
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }
 };
 
 
-export const patchPassword = async (password) => {
-    const ENDPOINT = '/api/user/password'
+export const deleteLike = async (commentId) => {
+    const ENDPOINT = `/api/comment/like?commentId=${commentId}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
-            method: 'PATCH',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': jwt
             },
-            body: JSON.stringify({password}),
+            // body: JSON.stringify(commentId),
             credentials: 'include'
         });
 
@@ -97,7 +73,7 @@ export const patchPassword = async (password) => {
             throw new Error(errorMessage);
         }
 
-        return await response.text();
+        return response.ok;
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }

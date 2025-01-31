@@ -1,11 +1,83 @@
 import { getJwt } from '../utils/Jwt';
 
-//
+
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 const jwt = getJwt();
 
-export const getUser = async () => {
-    const ENDPOINT = '/api/user'
+
+export const createComment = async (itemId, comment) => {
+    const ENDPOINT = `/api/item/${itemId}/comment`
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            body: JSON.stringify({...comment}),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return response.ok;
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};
+
+export const getItemComments = async (itemId) => {
+    const ENDPOINT = `/api/item/${itemId}/comments`
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};
+
+export const createChildComment = async (id, comment) => {
+    const ENDPOINT = `/api/comment/${id}`
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            body: JSON.stringify({...comment}),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return response.ok;
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};
+
+export const getChildComments = async (id) => {
+    const ENDPOINT = `/api/comment/${id}/replies`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'GET',
@@ -28,32 +100,8 @@ export const getUser = async () => {
 };
 
 
-
-export const getUserByEmail = async (email) => {
-    const ENDPOINT = `/api/user/${email}`
-    try {
-        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': jwt
-            },
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
-            return null;
-        }
-
-        return await response.json();
-    } catch (error) {
-        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
-    }
-};
-
-
-export const patchUser = async (user) => {
-    const ENDPOINT = '/api/user'
+export const patchComment = async (comment) => {
+    const ENDPOINT = `/api/comment`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'PATCH',
@@ -61,43 +109,39 @@ export const patchUser = async (user) => {
                 'Content-Type': 'application/json',
                 'Authorization': jwt
             },
-            body: JSON.stringify({...user}),
+            body: JSON.stringify({...comment}),
             credentials: 'include'
         });
 
-        //
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(errorMessage);
         }
 
-        return await response.text();
+        return response.ok
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }
 };
 
-
-export const patchPassword = async (password) => {
-    const ENDPOINT = '/api/user/password'
+export const deleteComment = async (id) => {
+    const ENDPOINT = `/api/comment/${id}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
-            method: 'PATCH',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': jwt
             },
-            body: JSON.stringify({password}),
             credentials: 'include'
         });
 
-        //
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(errorMessage);
         }
 
-        return await response.text();
+        return response.ok
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }

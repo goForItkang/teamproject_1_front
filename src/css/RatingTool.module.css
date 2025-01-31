@@ -1,0 +1,22 @@
+.starRating {
+    display: flex;
+    justify-content: flex-start;  /* 왼쪽 정렬로 변경 */
+    gap: 5px;
+}
+
+.starButton {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: gray;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.starButton.selected {
+    color: gold;
+}
+
+.starButton:focus {
+    outline: 2px solid #ffbf00;
+}

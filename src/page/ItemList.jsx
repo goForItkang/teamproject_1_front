@@ -93,6 +93,7 @@ const ItemListForm = () => {
                     {items.map((item) => (
                         <li key={item.id}>
                             <h3>{item.itemName}</h3>
+                            <p>{`평점 : ${item.averageRating}`}</p>
                             <p>{item.category}</p>
                             <p>{item.itemDesc}</p>
                             <p className={styles.price}>{item.itemOriginPrice} 원</p>

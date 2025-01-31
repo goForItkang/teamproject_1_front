@@ -31,7 +31,7 @@ function App() {
                     <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
                     <Route path={"/user/profile/edit"} element={<Profile/>}/>
                     <Route path={"/items"} element={<ItemList/>}/>
-                    <Route path={"/item/:id"} element={<ItemDetail/>}/>
+                    <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
             </Routes>
         </BrowserRouter>
     </div>
