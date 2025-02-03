@@ -18,6 +18,7 @@ const ItemForm = () => {
         itemImg: '',
         itemStock: '',
         itemOriginPrice: '',
+        itemPrice: '',
         itemBrand: '',
         category: '',
         imageFile: null,
@@ -48,6 +49,7 @@ const ItemForm = () => {
         form.append('itemImg', formData.itemImg);
         form.append('itemStock', formData.itemStock);
         form.append('itemOriginPrice', formData.itemOriginPrice);
+        form.append('itemPrice', formData.itemPrice);
         form.append('itemBrand', formData.itemBrand);
         form.append('category', formData.category);
         form.append('imageFile', formData.imageFile);
@@ -104,6 +106,17 @@ const ItemForm = () => {
                     type="number"
                     name="itemOriginPrice"
                     value={formData.itemOriginPrice}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div className={styles.formGroup}>
+                <label>상품 출시 가격</label>
+                <input
+                    type="number"
+                    name="itemPrice"
+                    value={formData.itemPrice}
                     onChange={handleChange}
                     required
                 />

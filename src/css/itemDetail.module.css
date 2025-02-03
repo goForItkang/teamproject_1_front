@@ -192,3 +192,26 @@
 .childCommentInput textarea {
     margin-top: 5px;
 }
+
+.buyButton {
+    background-color: #ff6b6b; /* 밝은 레드톤 */
+    color: white; /* 글자 색상 */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px; /* 부드러운 모서리 */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+.buyButton:hover {
+    background-color: #ff5252; /* 호버 시 더 진한 레드 */
+    transform: scale(1.05); /* 약간 확대 효과 */
+}
+
+.buyButton:active {
+    background-color: #e63946; /* 클릭 시 더 진한 색 */
+    transform: scale(0.98); /* 살짝 줄어드는 효과 */
+}
