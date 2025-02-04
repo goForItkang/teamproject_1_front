@@ -213,14 +213,10 @@ const SignupForm = () => {
                 <input type="submit" value="회원가입" className={styles.submitButton} />
 
                 <div className={styles.right}>
-                    <div className={styles.connect}>소셜 로그인</div>
-                    <Link to="#" className={`${styles.socialButton} ${styles.facebook}`}>Facebook</Link>
-                    <Link to="#" className={`${styles.socialButton} ${styles.twitter}`}>Twitter</Link>
-                    <Link to="#" className={`${styles.socialButton} ${styles.googlePlus}`}>Google+</Link>
 
                     <div className={styles.links}>
-                        <Link to="#">로그인</Link> |
-                        <Link to="#">비밀번호 찾기</Link>
+                        <Link to="/login">로그인</Link> |
+                        <Link to="/user/password">비밀번호 찾기</Link>
                     </div>
                 </div>
             </form>

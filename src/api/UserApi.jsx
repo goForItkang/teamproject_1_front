@@ -79,7 +79,7 @@ export const patchUser = async (user) => {
 
 
 export const patchPassword = async (password) => {
-    const ENDPOINT = '/api/user/password'
+    const ENDPOINT = '/api/user/profile/password'
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'PATCH',
@@ -88,6 +88,31 @@ export const patchPassword = async (password) => {
                 'Authorization': jwt
             },
             body: JSON.stringify({password}),
+            credentials: 'include'
+        });
+
+        //
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return await response.text();
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};
+
+export const patchForgotPassword = async (email, password) => {
+    const ENDPOINT = '/api/user/password'
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            body: JSON.stringify({email, password}),
             credentials: 'include'
         });
 

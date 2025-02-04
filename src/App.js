@@ -14,6 +14,7 @@ import ItemList from "./page/ItemList";
 import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
 import axios from "axios";
+import ForgotPassword from "./page/ForgotPassword";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                     <Route path={"/admin/item/add"} element={<ItemAdd/>}/>
                     <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
                     <Route path={"/user/profile/edit"} element={<Profile/>}/>
+                    <Route path={"/user/password"} element={<ForgotPassword/>}/>
                     <Route path={"/items"} element={<ItemList/>}/>
                     <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
             </Routes>
