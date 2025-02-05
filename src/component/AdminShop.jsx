@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {useLocation, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import PageBar from './PageBar'; // PageBar 컴포넌트 불러오기
-
+import "../css/adminShop.css"
 const AdminShop = () => {
     const parameter = useParams();
     const [item, setItem] = useState([]);
@@ -14,6 +14,7 @@ const AdminShop = () => {
     const size = 3; // 한 페이지에 보여줄 아이템 수
     const path = useLocation().pathname;
     const JwtCookie = 'JwtCookie';
+    const nav = useNavigate();
     const getJwtCookie = () => {
         return Cookies.get(JwtCookie);
     };
@@ -71,28 +72,42 @@ const AdminShop = () => {
     const onPageChange = (page) => {
         setCurrentPage(page);
     };
+    const itemDetailBtn = (id) =>{
+        nav(`/admin/item/detail/${id}`);
+    }
 
     return (
-        <div>
+        <div id={"admin-adminShop-div"}>
             <div>
                 <input type="text" onChange={(e) => setSearchData(e.target.value)} />
             </div>
                 <button >조회</button>
-            <div>
+            <div id={"admin-item-div"}>
                 {/* 상품 리스트 출력 */}
                 {item.length > 0 ? (
-                    <ul>
+                    <div className={"admin-items"}>
                         {item.map((item) => (
-                            <li key={item.id}>
-                                <h3>{item.itemName}</h3>
-                                <p>{item.itemDesc}</p>
-                                <img src={item.itemImg} alt={item.itemName} style={{ width: '100px', height: '100px' }} />
-                                <p>원가: {item.itemOriginPrice}</p>
-                                <p>판매가 : {item.itemPrice}</p>
-                                <p>재고: {item.itemStock}</p>
-                            </li>
+                            <div key={item.id}>
+                                <div>
+                                    <img src={item.itemImg} alt={item.itemName}
+                                         style={{width: '200px', height: '200px'}}/>
+                                </div>
+                                <div id={"item-info"}>
+                                    <h4>{item.itemName}</h4>
+                                    <p>{item.itemDesc}</p>
+                                </div>
+                                <div id={""}>
+                                    <p>원가: {item.itemOriginPrice}</p>
+                                    <p>판매가 : {item.itemPrice}</p>
+                                    <p>재고: {item.itemStock}</p>
+                                    <div id={"item-info-button-div"}>
+                                        <button onClick={e=>itemDetailBtn(item.id)}>상세 조회</button>
+                                        <button>수정</button>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 ) : (
                     <p>검색된 상품이 없습니다.</p>
                 )}
