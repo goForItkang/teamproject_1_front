@@ -1,27 +1,58 @@
-import React from 'react';
-import { useState } from 'react';
-import styles from '../css/login.module.css'
-import axios from 'axios';
-import {Link} from "react-router-dom";
-import {loginGoogle, loginNaver} from "../api/OAuth2Api";
-
-
-
+import styles from "../css/login.module.css";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
-    return (
-        <div>
-            <LoginForm/>
-        </div>
-    );
-};
+    return(
+        <LoginForm/>
+    )
+}
 
+//asd
 const LoginForm = () => {
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     const LOGIN_ENDPOINT = '/api/auth/login';
     const LOGIN_OAUTH2_ENDPOINT = '/api/login/oauth2';
     const GOOGLE_URL = `${BASE_URL}${LOGIN_OAUTH2_ENDPOINT}/google`
     const NAVER_URL = `${BASE_URL}${LOGIN_OAUTH2_ENDPOINT}/naver`
+    const navigate = useNavigate();
+
+
+    const [email, setEmail] = useState("")
+    const [focusEmail, setFocusEmail] = useState(false);
+    const [password, setPassword] = useState("")
+    const [focusPassword, setFocusPassword] = useState(false)
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+    const [isFail, setIsFail] = useState(false);
+
+    const getEmailImage = () => {
+        if(isFail === true) return "/-icon-mail-fail.svg"
+        else if(focusEmail === true || email !== "") return "/-icon-mail-fill.svg"
+        else return "/-icon-mail-none.svg"
+
+    }
+
+    const getPasswordImage = () =>{
+        if(isFail === true) return "/-icon-lock-fail.svg"
+        else if(focusPassword === true || password !== "") return "/-icon-lock-fill.svg"
+        else return "/-icon-lock-none.svg"
+
+    }
+
+    const getPasswordVisibleImage = () =>{
+        if(isPasswordVisible) return "/-icon-password-visible.svg"
+        else return "/-icon-password-hidden.svg"
+    }
+
+    const toggleIsPasswordVisible = () =>{
+        setIsPasswordVisible(!isPasswordVisible)
+    }
+
+    const isSubmitPossible = () => {
+        return (email !== "" && password !== "") ? "ableButton" : "disableButton"
+    }
+
 
 
     // 폼 제출 처리 함수.
@@ -44,9 +75,12 @@ const LoginForm = () => {
             });
 
             if (response.ok) {
-                alert('로그인 성공.');
+                // alert('로그인 성공.');
+                setIsFail(false)
+                navigate('/');
             } else {
-                alert('로그인 실패');
+                // alert('로그인 실패');
+                setIsFail(true)
             }
         } catch (err) {
             console.error(err);
@@ -54,77 +88,170 @@ const LoginForm = () => {
         }
     };
 
-    // const handleGoogle = async () => {
-    //     try {
-    //         // Google 로그인 처리
-    //         const data = await loginGoogle();
-    //
-    //         // 로그인 성공 후 data를 처리 (필요한 경우)
-    //         console.log(data);
-    //
-    //         // 이미 loginGoogle 내에서 리다이렉트가 처리되므로 추가 리다이렉트는 필요하지 않습니다.
-    //     } catch (error) {
-    //         // 오류 처리 (예: 사용자에게 오류 메시지 표시)
-    //         console.error('로그인 중 오류가 발생했습니다:', error.message);
-    //     }
-    // };
-
-    // const handleNaver = async () => {
-    //     try {
-    //         // Google 로그인 처리
-    //         const data = await loginNaver();
-    //
-    //         // 로그인 성공 후 data를 처리 (필요한 경우)
-    //         console.log(data);
-    //
-    //         // 이미 loginGoogle 내에서 리다이렉트가 처리되므로 추가 리다이렉트는 필요하지 않습니다.
-    //     } catch (error) {
-    //         // 오류 처리 (예: 사용자에게 오류 메시지 표시)
-    //         console.error('로그인 중 오류가 발생했습니다:', error.message);
-    //     }
-    // };
-
 
     return (
-        <>
-            <form onSubmit={handleSubmit} className={styles['login-form']}>
-                <div className={styles.heading}>로그인</div>
+        <div className={styles.div}>
 
-                <label htmlFor="email" className={styles.label}>이메일</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={styles.input}
-                    required
-                    placeholder="이메일을 입력하세요"
-                />
 
-                <label htmlFor="password" className={styles.label}>비밀번호</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className={styles.input}
-                    required
-                    placeholder="비밀번호를 입력하세요"
-                />
-
-                <input type="submit" value="로그인" className={styles['submit-button']}/>
-
-                <div className={styles.right}>
-                    <div className={styles.connect}>소셜 로그인</div>
-                    <Link to= {GOOGLE_URL}
-                          className={`${styles['social-button']} ${styles.googlePlus}`}>Google</Link>
-                    <Link to= {NAVER_URL}
-                          className={`${styles['social-button']} ${styles.googlePlus}`}>Naver</Link>
-                    <div className={styles.links}>
-                        <Link to="/signup">회원가입</Link> |
-                        <Link to="/user/password">비밀번호 찾기</Link>
+            <div className={styles.inner}>
+                <div className={styles.frameParent}>
+                    <div className={styles.frameWrapper}>
+                        <div className={styles.frameGroup}>
+                            <div className={styles.rectangleParent}>
+                                <div className={styles.frameChild}/>
+                                <div className={styles.frameItem}/>
+                                <div className={styles.frameInner}/>
+                            </div>
+                            <div className={styles.rectangleGroup}>
+                                <div className={styles.rectangleDiv}/>
+                                <div className={styles.frameChild1}/>
+                                <div className={styles.frameInner}/>
+                                <div className={styles.frameChild3}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.healthParent}>
+                        <b className={styles.health}>Health</b>
+                        <div className={styles.shopWrapper}>
+                            <b className={styles.shop}>Shop</b>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+
+            {/*로그인 - 이메일, 비밀번호*/}
+            <form onSubmit = {handleSubmit} className={styles.loginFormParent}>
+                <div className={styles.loginForm}>
+
+                    {/*이메일 입력*/}
+                    <div className={isFail === true ? styles.emailFailureFields : styles.inputFields}>
+                        <div className={styles.inputFieldsChild}/>
+                        <div className={styles.iconFields}>
+                            <img className={styles.iconMail} alt="" src={`/images${getEmailImage()}`}/>
+                        </div>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.input}
+                            placeholder={"이메일"}
+                            value={email}
+                            onFocus={() => setFocusEmail(true)}
+                            onBlur={() => setFocusEmail(false)}
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
+                        />
+                    </div>
+
+
+                    {/*비밀번호 입력*/}
+                    <div className={isFail === true ? styles.passwordFailureFields : styles.inputFields1}>
+                        <div className={styles.inputFieldsChild}/>
+                        <div className={styles.iconLockParent}>
+                            <img className={styles.iconLock} alt="" src={`/images${getPasswordImage()}`}/>
+                            <input
+                                className={styles.input}
+                                type={isPasswordVisible ? "text" : "password"}
+                                id="password"
+                                name="password"
+
+                                placeholder={"비밀번호"}
+                                value={password}
+                                onFocus={() => setFocusPassword(true)}
+                                onBlur={() => setFocusPassword(false)}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+
+                        {/*비밀번호 보기*/}
+                        <div className={styles.groupWrapper}>
+                            <img className={styles.groupIcon}
+                                 alt=""
+                                 src={`/images${getPasswordVisibleImage()}`}
+                                 onClick={toggleIsPasswordVisible}
+                            />
+                        </div>
+                    </div>
+
+                    {/*로그인 실패 메시지*/}
+                    {isFail === true &&
+                        <div className={styles.healthParent}>
+                            <div className={styles.div2}>
+                                <ul className={styles.ul}>
+                                    <li>이메일 또는 비밀번호가 잘못되었습니다.</li>
+                                </ul>
+                            </div>
+                            <div className={styles.wrapper}>
+                                <div className={styles.warningMessage2}>
+                                    아이디와 비밀번호를 정확히 입력해 주세요.
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                {/*제출*/}
+                <button className={styles[isSubmitPossible()]}>
+                    {/*<div className={styles.frameChild4}/>*/}
+                    <b className={styles.b}>로그인</b>
+                </button>
+
+
             </form>
-        </>
+
+            {/*외부 로그인(OAuth2)*/}
+            <div className={styles.testInner}>
+                <div className={styles.ellipseParent}>
+
+                    <Link to = {GOOGLE_URL}>
+                        <img
+                            className={styles.ellipseIcon}
+                            loading="lazy"
+                            alt=""
+                            src="/images/-icon-google.png"
+                        />
+                    </Link>
+
+                    <Link to = {NAVER_URL}>
+                        <img
+                            className={styles.ellipseIcon}
+                            loading="lazy"
+                            alt=""
+                            src="/images/-icon-naver.png"
+                        />
+                    </Link>
+                </div>
+            </div>
+
+
+            {/*회원가입, 비밀번호 찾기*/}
+            <div className={styles.linksWrapper}>
+                <div className={styles.links}>
+
+                    <Link to="/signup" className={styles.linkFont}>
+                        <div className={styles.linkLabels}>
+                            <div>회원가입</div>
+                        </div>
+                    </Link>
+
+                    <div className={styles.linkLabels1}>
+                        <div> · </div>
+                    </div>
+
+                    <Link to="/user/password" className={styles.linkFont}>
+                        <div className={styles.linkLabels}>
+                            <div>비밀번호 찾기</div>
+                        </div>
+                    </Link>
+
+                </div>
+            </div>
+
+        </div>
+
+
     );
 };
 
