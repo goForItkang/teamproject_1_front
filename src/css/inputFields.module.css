@@ -1,0 +1,887 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+body {
+    margin: 0;
+    line-height: normal;
+}
+:root {
+    /* fonts */
+    --font-inter: Inter;
+
+    /* font sizes */
+    --font-size-base: 16px;
+    --font-size-xl: 20px;
+
+    /* Colors */
+    --color-white: #fff;
+    --color-gainsboro: #d9d9d9;
+    --color-black: #000;
+    --color-tomato: #ff3f3f;
+
+    /* Gaps */
+    --gap-41xl: 60px;
+    --gap-mini: 15px;
+    --gap-11xl: 30px;
+    --gap-3xs: 10px;
+    --gap-21xl: 40px;
+    --gap-xl: 20px;
+    --gap-5xs: 8px;
+    --gap-5xl-4: 24.4px;
+    --gap-2xl: 21px;
+    --gap-5xl: 24px;
+    --gap-3xl: 22px;
+    --gap-5xs-7: 7.7px;
+    --gap-16xl: 35px;
+    --gap-mid: 17px;
+
+    /* Paddings */
+    --padding-371xl: 390px;
+    --padding-99xl: 118px;
+    --padding-xl: 20px;
+    --padding-176xl: 195px;
+    --padding-mini: 15px;
+    --padding-2xs: 11px;
+    --padding-xs: 12px;
+    --padding-5xl: 24px;
+    --padding-4xl: 23px;
+    --padding-5xs: 8px;
+    --padding-3xl: 22px;
+    --padding-11xs: 2px;
+    --padding-12xs: 1px;
+    --padding-8xs: 5px;
+    --padding-151xl: 170px;
+    --padding-145xl: 164px;
+    --padding-207xl: 226px;
+    --padding-209xl: 228px;
+    --padding-95xl: 114px;
+    --padding-94xl: 113px;
+    --padding-9xs: 4px;
+    --padding-2xl: 21px;
+
+    /* Border radiuses */
+    --br-71xl: 90px;
+    --br-8xs: 5px;
+}
+
+/*위는 global.css*/
+
+
+.frameChild {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 36px;
+}
+.frameItem {
+    position: absolute;
+    top: 0px;
+    left: 14.9px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 36px;
+}
+.frameInner {
+    position: absolute;
+    top: 22.2px;
+    left: 0px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 23.4px;
+    transform: rotate(-90deg);
+    transform-origin: 0 0;
+    z-index: 1;
+}
+.rectangleParent {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 23.4px;
+    height: 36px;
+}
+.rectangleDiv {
+    position: absolute;
+    top: 13.7px;
+    left: 14.9px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 22.3px;
+}
+.frameChild1 {
+    position: absolute;
+    top: 8.5px;
+    left: 0px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 23.4px;
+    transform: rotate(-90deg);
+    transform-origin: 0 0;
+}
+.frameChild3 {
+    position: absolute;
+    top: 36px;
+    left: 0px;
+    background-color: var(--color-black);
+    width: 8.5px;
+    height: 23.4px;
+    transform: rotate(-90deg);
+    transform-origin: 0 0;
+    z-index: 1;
+}
+.rectangleGroup {
+    position: absolute;
+    top: 0px;
+    left: 24.9px;
+    width: 23.4px;
+    height: 36px;
+}
+.frameGroup {
+    align-self: stretch;
+    height: 36px;
+    position: relative;
+}
+.frameWrapper {
+    width: 48.3px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-8xs) 0px 0px;
+    box-sizing: border-box;
+}
+.health {
+    position: relative;
+    display: inline-block;
+    min-width: 66px;
+    flex-shrink: 0;
+    z-index: 1;
+}
+.shop {
+    margin-top: -2px;
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.shopWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px 0px 0px;
+}
+.healthParent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.frameParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-5xs-7);
+}
+.inner {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0px var(--padding-12xs) 0px 0px;
+}
+.inputFieldsChild {
+    height: 50px;
+    width: 500px;
+    position: relative;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: none;
+    max-width: 100%;
+}
+.iconMail {
+    width: 20px;
+    height: 16.7px;
+    position: relative;
+    z-index: 1;
+    top:3px;
+}
+.iconFields {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-11xs) 0px 0px;
+}
+.div1 {
+    position: relative;
+    font-size: var(--font-size-base);
+    font-family: var(--font-inter);
+    color: var(--color-gainsboro);
+    text-align: left;
+    z-index: 1;
+}
+
+
+.inputFields {
+    /*align-self: stretch;*/
+    /*flex: 1;*/
+    /*border-radius: var(--br-8xs);*/
+    /*border: 2px solid var(--color-gainsboro);*/
+    /*box-sizing: border-box;*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*align-items: flex-start;*/
+    /*justify-content: flex-start;*/
+    /*padding: var(--padding-xs) var(--padding-3xl) 13px;*/
+    /*gap: var(--gap-3xl);*/
+    /*max-width: 100%;*/
+
+    align-self: stretch;
+    flex: 0.52;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-5xl) var(--padding-5xs);
+    gap: var(--gap-5xl);
+    max-width: 100%;
+
+}
+
+
+/*자식이 focus 받으면 해당 디자인 적용됨*/
+.inputFields:focus-within {
+    border: 2px solid var(--color-black);
+}
+
+.emailFailureFields{
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-tomato);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-3xl) 13px;
+    gap: var(--gap-3xl);
+    max-width: 100%;
+}
+
+
+.iconLock {
+    height: 20px;
+    width: 16px;
+    position: relative;
+    z-index: 1;
+}
+.iconLockParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-5xl);
+    width: 100%;
+}
+.groupIcon {
+    width: 18.5px;
+    height: 11.4px;
+    position: relative;
+    z-index: 1;
+}
+.groupWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-9xs) 0px 0px;
+}
+.inputFields1 {
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--padding-xs) var(--padding-xl) var(--padding-xs)
+    var(--padding-5xl);
+    max-width: 100%;
+    gap: var(--gap-xl);
+}
+
+.inputFields1:focus-within{
+    border: 2px solid var(--color-black);
+}
+
+.passwordFailureFields{
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-tomato);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--padding-xs) var(--padding-xl) var(--padding-xs)
+    var(--padding-5xl);
+    max-width: 100%;
+    gap: var(--gap-xl);
+}
+
+.loginForm {
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-5xs);
+    max-width: 100%;
+}
+.frameChild4 {
+    height: 50px;
+    width: 500px;
+    position: relative;
+    border-radius: var(--br-71xl);
+    background-color: var(--color-gainsboro);
+    display: none;
+    max-width: 100%;
+}
+.b {
+    position: relative;
+    font-size: var(--font-size-base);
+    display: inline-block;
+    font-family: var(--font-inter);
+    color: var(--color-white);
+    text-align: center;
+    min-width: 46px;
+    white-space: nowrap;
+    z-index: 1;
+    width:100%;
+
+}
+.disableButton {
+    border-radius: var(--br-71xl);
+    border: 2px solid var(--color-gainsboro);
+    background-color: var(--color-gainsboro);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) 227px 16px var(--padding-209xl);
+    box-sizing: border-box;
+    max-width: 100%;
+    pointer-events: none;
+
+}
+
+.ableButton {
+    border-radius: var(--br-71xl);
+    border: 2px solid var(--color-black);
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) var(--padding-207xl) var(--padding-2xs)
+    var(--padding-209xl);
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+
+.loginFormParent {
+    margin: 0;
+    align-self: stretch;
+    height: 198px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-21xl);
+    max-width: 100%;
+
+}
+
+.loginFormParent > * {
+    width: 100%; /* 자식 요소들의 너비를 100%로 설정 */
+}
+
+.frameChild5 {
+    height: 50px;
+    width: 120px;
+    position: relative;
+}
+.child {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+.div3 {
+    position: relative;
+    white-space: nowrap;
+}
+.div4 {
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+    margin-left: -59px;
+}
+.linkLabels {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.div5 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    min-width: 15px;
+}
+.div6 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    min-width: 15px;
+    z-index: 1;
+}
+.linkLabels1 {
+    height: 19px;
+    position: relative;
+    color: var(--color-black);
+}
+.div7 {
+    position: relative;
+    line-height: 19px;
+    white-space: nowrap;
+}
+.div8 {
+    position: relative;
+    line-height: 19px;
+    white-space: nowrap;
+    z-index: 1;
+    margin-left: -93px;
+}
+.links {
+    align-self: stretch;
+    width: 186px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-3xs);
+}
+.linksWrapper {
+    align-self: stretch;
+    height: 19px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: var(--font-size-base);
+    color: var(--color-gainsboro);
+}
+.div {
+    width: 100%;
+    position: relative;
+    background-color: var(--color-white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-151xl) var(--padding-371xl) 169px;
+    box-sizing: border-box;
+    gap: var(--gap-41xl);
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    font-size: var(--font-size-xl);
+    color: var(--color-black);
+    font-family: var(--font-inter);
+
+
+    /*고정 사이즈 디자인이 있어서 임시방편으로 최소 사이즈를 제한해놓음*/
+    min-width:1300px;
+}
+
+/*@media screen and (max-width: 650px) {*/
+/*    .div {*/
+/*        gap: var(--gap-11xl);*/
+/*        padding-left: var(--padding-176xl);*/
+/*        padding-right: var(--padding-176xl);*/
+/*        box-sizing: border-box;*/
+/*    }*/
+/*}*/
+/*@media screen and (max-width: 625px) {*/
+/*    .rectangleContainer {*/
+/*        padding-left: var(--padding-95xl);*/
+/*        padding-right: var(--padding-94xl);*/
+/*        box-sizing: border-box;*/
+/*    }*/
+
+/*    .loginFormParent {*/
+/*        gap: var(--gap-xl);*/
+/*    }*/
+/*}*/
+/*@media screen and (max-width: 450px) {*/
+/*    .health {*/
+/*        font-size: var(--font-size-base);*/
+/*    }*/
+
+/*    .shop {*/
+/*        font-size: var(--font-size-base);*/
+/*    }*/
+
+/*    .rectangleContainer {*/
+/*        padding-left: var(--padding-xl);*/
+/*        padding-right: var(--padding-xl);*/
+/*        box-sizing: border-box;*/
+/*    }*/
+
+/*    .div {*/
+/*        gap: var(--gap-mini);*/
+/*        padding-left: var(--padding-xl);*/
+/*        padding-right: var(--padding-xl);*/
+/*        box-sizing: border-box;*/
+/*    }*/
+/*}*/
+
+
+.ellipseIcon {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.ellipseParent,
+.testInner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.ellipseParent {
+    justify-content: flex-start;
+    gap: var(--gap-xl);
+}
+.testInner {
+    align-self: stretch;
+    justify-content: center;
+}
+
+
+.date-picker-wrapper {
+    width: 100%; /* 래퍼에 width 적용 */
+}
+
+.input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    /*transform: translateY(-5px);*/
+    /*vertical-align: top;*/
+}
+
+.input::placeholder {
+    position: relative;
+    font-size: var(--font-size-base);
+    font-family: var(--font-inter);
+    color: var(--color-gainsboro);
+    text-align: left;
+    z-index: 1;
+}
+
+
+
+.div2 {
+    width: 294px;
+    position: relative;
+    font-size: var(--font-size-base);
+    line-height: 19px;
+    font-family: var(--font-inter);
+    color: var(--color-tomato);
+    text-align: left;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.ul {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    padding-left: var(--padding-2xl);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px 0px 0px var(--padding-5xl);
+}
+
+.warningMessage2 {
+    width: 289px;
+    position: relative;
+    font-size: var(--font-size-base);
+    font-family: var(--font-inter);
+    color: var(--color-tomato);
+    text-align: left;
+    display: inline-block;
+    flex-shrink: 0;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.linkFont {
+    color: var(--color-gainsboro);
+    text-decoration: none;
+}
+
+
+.iconBirthday {
+    height: 20px;
+    width: 18.7px;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+
+
+
+
+
+
+.inputFieldsStructure {
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-8xs);
+    max-width: 100%;
+}
+
+.topInputFieldsStructure {
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-3xl) var(--padding-5xs);
+    gap: var(--gap-3xl);
+    max-width: 100%;
+}
+
+.topInputFieldsFailedStructure {
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-tomato);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-3xl) var(--padding-5xs);
+    gap: var(--gap-3xl);
+    max-width: 100%;
+}
+
+.topInputFieldsFilledStructure {
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-black);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-3xl) var(--padding-5xs);
+    gap: var(--gap-3xl);
+    max-width: 100%;
+}
+
+
+.topInputFieldsStructureChild {
+    height: 50px;
+    width: 500px;
+    position: relative;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: none;
+    max-width: 100%;
+}
+
+.iconInputFields {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-11xs) 0px 0px;
+}
+
+.div123 {
+    position: relative;
+    z-index: 1;
+}
+
+.bottomInputFieldsStructure {
+    border: 0px;
+    border-radius: var(--br-8xs);
+    background-color: var(--color-gainsboro);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) var(--padding-10xl) var(--padding-2xs)
+    var(--padding-11xl);
+    color: var(--color-white);
+}
+
+.emailAbleButton {
+    border: 0px;
+    border-radius: var(--br-8xs);
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) var(--padding-10xl) var(--padding-2xs)
+    var(--padding-11xl);
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+
+
+.emailUnableButton {
+    border: 0px;
+    border-radius: var(--br-8xs);
+    background-color: var(--color-gainsboro);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) var(--padding-10xl) var(--padding-2xs)
+    var(--padding-11xl);
+    color: var(--color-white);
+    pointer-events: none;
+}
+
+
+
+.bottomInputFieldsStructureChild {
+    height: 50px;
+    width: 90px;
+    position: relative;
+    border-radius: var(--br-8xs);
+    background-color: var(--color-gainsboro);
+    display: none;
+}
+
+.inputFieldsStructure1 {
+    align-self: stretch;
+    flex: 0.52;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-3xl) var(--padding-5xs);
+    gap: var(--gap-3xl);
+    max-width: 100%;
+}
+
+.inputFieldsStructureName {
+    align-self: stretch;
+    flex: 0.52;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-5xl) var(--padding-5xs);
+    gap: var(--gap-5xl);
+    max-width: 100%;
+}
+
+.inputFieldsStructureBirthday {
+    align-self: stretch;
+    flex: 0.52;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-4xl) var(--padding-5xs);
+    gap: var(--gap-3xl-3);
+    max-width: 100%;
+}
+
+.inputFieldsStructureBirthday:focus-within {
+    border: 2px solid var(--color-black);
+}
+
+.inputFieldsStructurePhone {
+    align-self: stretch;
+    flex: 0.52;
+    border-radius: var(--br-8xs);
+    border: 2px solid var(--color-gainsboro);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-xs) var(--padding-5xl) var(--padding-5xs);
+    gap: var(--gap-5xl-4);
+    max-width: 100%;
+}
+
+.submitEmailMessage{
+    width: 211px;
+    position: relative;
+    color: var(--color-black);
+    display: inline-block;
+    white-space: nowrap;
+}

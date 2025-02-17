@@ -1,32 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import { sendEmail, authEmail } from '../api/EmailTokenApi'; // 이미 제공된 API 함수
-import styles from '../css/signup.module.css';
-import {Link, useSearchParams} from "react-router-dom";
+
+import {
+    InputBirthday, InputEmailTokenWithButton, InputEmailWithButton,
+    InputName,
+    InputPassword,
+    InputPhoneNumber
+} from "../component/InputFields";
+import styles from "../css/signup.module.css";
+import React, {useEffect, useState} from "react";
+import {LoginLogo} from "../component/Logo";
+import {SubmitButton} from "../component/SubmitButton";
+import {useSearchParams} from "react-router-dom";
 import {getUserByEmail} from "../api/UserApi";
+import {authEmail, sendEmail} from "../api/EmailTokenApi";
 
 const Signup = () => {
     return (
         <>
             <SignupForm/>
         </>
-    );
-};
-
+    )
+}
 
 
 const SignupForm = () => {
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     const LOGIN_ENDPOINT = '/api/signup';
 
-    // 상태 관리
     const [searchParams] = useSearchParams();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [birthday, setBirthday] = useState('');
     const [authCode, setAuthCode] = useState('');
+    const [password, setPassword] = useState("")
+    const [currentPassword, setCurrentPassword] = useState("")
+    const [username, setUsername] = useState("")
+    const [birthday, setBirthday] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
     const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 상태
+    const [isSubmitEmail, setIsSubmitEmail] = useState(false)
+    const [isFailEmail, setIsFailEmail] = useState(false)
+    const [isCheckedAuth, setIsCheckedAuth] = useState(false)
+    const [isFailAuth, setIsFailAuth] = useState(false)
+    const [isFailCurrentPassword, setIsFailCurrentPassword] = useState(false)
+
+    const [isFail, setIsFail] = useState(false);
 
     useEffect(() => {
         const emailParam = searchParams.get('email');  // 'email' 쿼리 파라미터 값을 가져옴
@@ -36,13 +51,29 @@ const SignupForm = () => {
     }, [searchParams]);  // searchParams가 변경될 때마다 실행
 
 
+    useEffect(() => {
+        checkedCurrentPassword();
+    }, [currentPassword, password]);
+
+    const checkedCurrentPassword = () => {
+        console.log("currentPassword : " + currentPassword)
+        if(currentPassword !== "" && password !== currentPassword){
+            setIsFailCurrentPassword(true)
+        }
+        else{
+            setIsFailCurrentPassword(false)
+        }
+    }
+
     // 이메일 인증 보내기
     const handleSendEmail = async () => {
 
-        //중복 회원 검사
+        //중복 회원 검사1
         try{
             const response = await getUserByEmail(email);
             if(response != null){
+                setIsSubmitEmail(false)
+                setIsFailEmail(true)
                 alert("이미 사용 중인 이메일입니다.")
                 return
             }
@@ -53,6 +84,8 @@ const SignupForm = () => {
 
 
         try {
+            setIsFailEmail(false)
+            setIsSubmitEmail(true)
             alert('이메일 인증 링크가 전송되었습니다.');
             const response = await sendEmail({ email });
         } catch (error) {
@@ -62,26 +95,47 @@ const SignupForm = () => {
 
     // 이메일 인증 처리
     const handleAuthEmail = async () => {
-
+        setIsSubmitEmail(false)
         try {
             const response = await authEmail({ email, authCode });
             if (response) {
+                setIsCheckedAuth(true)
                 setIsEmailVerified(true);
+                setIsFailAuth(false)
                 alert('이메일 인증이 완료되었습니다.');
             }
+            else{
+                setIsFailAuth(true)
+            }
         } catch (error) {
+            setIsFailAuth(true)
             alert(error.message);
         }
     };
+
+
+
+    const isSubmitPossible=()=>{
+        if(isEmailVerified !== true || password !== currentPassword){
+            return false
+        }
+
+
+        return (
+            email !== "" &&
+            authCode !== "" &&
+            password !== "" &&
+            currentPassword !== "" &&
+            username !== "" &&
+            birthday !== "" &&
+            phoneNumber !== ""
+        );
+    }
 
     // 폼 제출 처리 함수
     const handleSubmit = async (e) => {
         e.preventDefault(); // 기본 폼 제출 방지
 
-        if (!isEmailVerified) {
-            alert('이메일 인증이 필요합니다.');
-            return;
-        }
 
         // 폼 데이터 수집
         const formData = {
@@ -93,6 +147,7 @@ const SignupForm = () => {
         };
 
         try {
+
             // 회원가입 요청
             const response = await fetch(`${BASE_URL}${LOGIN_ENDPOINT}`, {
                 method: 'POST',
@@ -113,115 +168,61 @@ const SignupForm = () => {
         }
     };
 
+
+
     return (
-        <main>
-            <form onSubmit={handleSubmit} className={styles.signupForm}>
-                <div className={styles.heading}>회원가입</div>
 
-                <label htmlFor="email" className={styles.label}>이메일</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={styles.input}
-                    required
-                    placeholder="이메일을 입력하세요"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isEmailVerified}
-                />
-                <button
-                    type="button"
-                    onClick={handleSendEmail}
-                    disabled={isEmailVerified}
-                    className={styles.submitButton}
-                >
-                    이메일 인증 보내기
-                </button>
+        <>
 
-                {isEmailVerified && (
-                    <div>이메일 인증 완료되었습니다.</div>
-                )}
+            {/*로그인 - 이메일, 비밀번호1*/}
 
-                <label htmlFor="emailToken" className={styles.label}>인증 코드</label>
-                <input
-                    type="text"
-                    id="emailToken"
-                    name="emailToken"
-                    className={styles.input}
-                    required
-                    placeholder="이메일 인증 코드를 입력하세요"
-                    value={authCode}
-                    disabled={isEmailVerified}
-                    onChange={(e) => setAuthCode(e.target.value)}
-                />
-                <button type="button"
-                        onClick={handleAuthEmail}
-                        disabled={isEmailVerified}
-                        className={styles.submitButton}
-                >
-                    인증 코드 확인
-                </button>
-
-                <label htmlFor="password" className={styles.label}>비밀번호</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className={styles.input}
-                    required
-                    placeholder="비밀번호를 입력하세요"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-
-                <label htmlFor="username" className={styles.label}>사용자 이름</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    className={styles.input}
-                    required
-                    placeholder="사용자 이름을 입력하세요"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-
-                <label htmlFor="phoneNumber" className={styles.label}>전화번호</label>
-                <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    className={styles.input}
-                    required
-                    placeholder="전화번호를 입력하세요"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-
-                <label htmlFor="birthday" className={styles.label}>생일</label>
-                <input
-                    type="date"
-                    id="birthday"
-                    name="birthday"
-                    className={styles.input}
-                    required
-                    value={birthday}
-                    onChange={(e) => setBirthday(e.target.value)}
-                />
-
-                <input type="submit" value="회원가입" className={styles.submitButton} />
-
-                <div className={styles.right}>
-
-                    <div className={styles.links}>
-                        <Link to="/login">로그인</Link> |
-                        <Link to="/user/password">비밀번호 찾기</Link>
+            <div className={styles.div}>
+                <LoginLogo/>
+                <form onSubmit={handleSubmit} className={styles.form}  onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}>
+                    <div className={styles.formStructure}>
+                        <InputEmailWithButton
+                            onChange={setEmail}
+                            onClick = {handleSendEmail}
+                            disabled={isEmailVerified}
+                            isSubmitEmail = {isSubmitEmail}
+                            isFail = {isFailEmail}
+                        />
+                        <InputEmailTokenWithButton
+                            onChange={setAuthCode}
+                            onClick = {handleAuthEmail}
+                            disabled={isEmailVerified}
+                            isCheckedAuth = {isCheckedAuth}
+                            isFail = {isFailAuth}
+                        />
+                        <InputPassword
+                            isFail={false}
+                            placeholder="비밀번호"
+                            onChange={setPassword}
+                        />
+                        <InputPassword
+                            isFail={isFailCurrentPassword}
+                            placeholder="비밀번호 확인"
+                            onChange={setCurrentPassword}
+                        />
+                        <InputName
+                            onChange={setUsername}
+                        />
+                        <InputBirthday
+                            onChange={setBirthday}
+                        />
+                        <InputPhoneNumber
+                            onChange={setPhoneNumber}
+                        />
                     </div>
-                </div>
-            </form>
-        </main>
-    );
+                    <SubmitButton
+                        buttonName="회원가입"
+                        isSubmitPossible={isSubmitPossible}
+                    />
+                </form>
+            </div>
+        </>
+
+    )
 };
 
 export default Signup;

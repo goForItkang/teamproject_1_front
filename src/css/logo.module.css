@@ -148,7 +148,6 @@
     z-index: 1;
 }
 .structure6 {
-    border: 2px solid var(--color-gainsboro); /* 두께 2px, 실선, 빨간색 */
     border-radius: var(--br-71xl);
     background-color: var(--color-gainsboro);
     display: flex;
@@ -159,7 +158,6 @@
     var(--padding-249xl);
     box-sizing: border-box;
     max-width: 100%;
-    width:100%;
 }
 .structure5 {
     margin: 0;
@@ -216,9 +214,6 @@
     font-size: var(--font-size-xl);
     color: var(--color-black);
     font-family: var(--font-inter);
-
-    /*고정 사이즈 디자인이 있어서 임시방편으로 최소 사이즈를 제한해놓음*/
-    min-width:1200px;
 }
 
 @media screen and (max-width: 650px) {
@@ -262,33 +257,3 @@
         box-sizing: border-box;
     }
 }
-
-
-.form {
-    margin: 0;
-    align-self: stretch;
-    height: 493px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: var(--gap-26xl);
-    max-width: 100%;
-}
-
-.formStructure {
-    align-self: stretch;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: var(--gap-5xs);
-    max-width: 100%;
-    text-align: left;
-    font-size: var(--font-size-base);
-    color: var(--color-gainsboro);
-    font-family: var(--font-inter);
-}
-
-
