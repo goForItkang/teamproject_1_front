@@ -8,7 +8,7 @@ const Login = () => {
     )
 }
 
-//asd
+
 const LoginForm = () => {
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     const LOGIN_ENDPOINT = '/api/auth/login';

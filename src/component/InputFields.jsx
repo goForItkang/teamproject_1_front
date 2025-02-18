@@ -80,6 +80,7 @@ export const InputFieldWithButton = ({inputStyle,imageStyle,imageSrc, buttonName
                 </div>
                 <button
                     {...props}
+                    id={`button${props.id}`}
                     type="button"
                     className={styles[getButtonDesign()]}
                     onClick = {onClick}>
@@ -228,7 +229,6 @@ export const InputPassword = ({isFail, placeholder, ...props}) => {
         if (isFail === true) return "/-icon-lock-fail.svg"
         else if (focusPassword === true || password !== "") return "/-icon-lock-fill.svg"
         return "/-icon-lock-none.svg"
-
     }
 
     const getPasswordVisibleImage = () => {
@@ -252,12 +252,12 @@ export const InputPassword = ({isFail, placeholder, ...props}) => {
             <div className={isFail === true ? styles.passwordFailureFields : styles.inputFields}>
                 <div className={styles.inputFieldsChild}/>
                 <div className={styles.iconLockParent}>
-                    <img className={styles.iconLock} alt="" src={`images/${getPasswordImage()}`}/>
+                    <img className={styles.iconLock} alt="" src={`/images${getPasswordImage()}`}/>
                     <input
                         {...props}
                         className={styles.input}
                         type={isPasswordVisible ? "text" : "password"}
-                        id="password"
+                        // id="password"
                         name="password"
                         placeholder={placeholder}
                         value={password}
@@ -271,7 +271,7 @@ export const InputPassword = ({isFail, placeholder, ...props}) => {
                 <div className={styles.groupWrapper}>
                     <img className={styles.groupIcon}
                          alt=""
-                         src={`images/${getPasswordVisibleImage()}`}
+                         src={`/images${getPasswordVisibleImage()}`}
                          onClick={toggleIsPasswordVisible}
                     />
                 </div>

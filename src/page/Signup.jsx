@@ -9,9 +9,10 @@ import styles from "../css/signup.module.css";
 import React, {useEffect, useState} from "react";
 import {LoginLogo} from "../component/Logo";
 import {SubmitButton} from "../component/SubmitButton";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {getUserByEmail} from "../api/UserApi";
 import {authEmail, sendEmail} from "../api/EmailTokenApi";
+import {LinkLoginAndFindPassword} from "../component/LinkFields";
 
 const Signup = () => {
     return (
@@ -25,6 +26,7 @@ const Signup = () => {
 const SignupForm = () => {
     const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
     const LOGIN_ENDPOINT = '/api/signup';
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const [email, setEmail] = useState('');
@@ -56,7 +58,7 @@ const SignupForm = () => {
     }, [currentPassword, password]);
 
     const checkedCurrentPassword = () => {
-        console.log("currentPassword : " + currentPassword)
+        // console.log("currentPassword : " + currentPassword)
         if(currentPassword !== "" && password !== currentPassword){
             setIsFailCurrentPassword(true)
         }
@@ -74,7 +76,7 @@ const SignupForm = () => {
             if(response != null){
                 setIsSubmitEmail(false)
                 setIsFailEmail(true)
-                alert("이미 사용 중인 이메일입니다.")
+                // alert("이미 사용 중인 이메일입니다.")
                 return
             }
         }catch(error){
@@ -86,10 +88,10 @@ const SignupForm = () => {
         try {
             setIsFailEmail(false)
             setIsSubmitEmail(true)
-            alert('이메일 인증 링크가 전송되었습니다.');
+            // alert('이메일 인증 링크가 전송되었습니다.');
             const response = await sendEmail({ email });
         } catch (error) {
-            alert(error.message);
+            // alert(error.message);
         }
     };
 
@@ -102,14 +104,14 @@ const SignupForm = () => {
                 setIsCheckedAuth(true)
                 setIsEmailVerified(true);
                 setIsFailAuth(false)
-                alert('이메일 인증이 완료되었습니다.');
+                // alert('이메일 인증이 완료되었습니다.');
             }
             else{
                 setIsFailAuth(true)
             }
         } catch (error) {
             setIsFailAuth(true)
-            alert(error.message);
+            // alert(error.message);
         }
     };
 
@@ -158,13 +160,15 @@ const SignupForm = () => {
             });
 
             if (response.ok) {
-                alert('회원가입 성공');
+                alert('회원가입 완료');
+                navigate('/')
+                // alert('회원가입 성공');
             } else {
-                alert('회원가입 실패');
+                // alert('회원가입 실패');
             }
         } catch (err) {
             console.error(err);
-            alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+            // alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
         }
     };
 
@@ -219,7 +223,12 @@ const SignupForm = () => {
                         isSubmitPossible={isSubmitPossible}
                     />
                 </form>
+
+                {/*div : form과 Link사이에 간격 늘리는 용도*/}
+                <div></div>
+                <LinkLoginAndFindPassword/>
             </div>
+
         </>
 
     )

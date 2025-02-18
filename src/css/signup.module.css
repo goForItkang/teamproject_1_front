@@ -267,7 +267,7 @@
 .form {
     margin: 0;
     align-self: stretch;
-    height: 493px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

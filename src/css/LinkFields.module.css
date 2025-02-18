@@ -1,0 +1,38 @@
+.linksWrapper {
+    align-self: stretch;
+    height: 19px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: var(--font-size-base);
+    color: var(--color-gainsboro);
+}
+
+.links {
+    align-self: stretch;
+    width: 186px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-3xs);
+}
+
+.linkFont {
+    color: var(--color-gainsboro);
+    text-decoration: none;
+}
+
+.linkLabels {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.linkLabels1 {
+    height: 19px;
+    position: relative;
+    color: var(--color-black);
+}

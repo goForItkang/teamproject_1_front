@@ -77,6 +77,8 @@ body {
     --padding-lgi: 19px;
     --padding-10xl: 29px;
     --padding-11xl: 30px;
+    --padding-106xl: 125px;
+    --padding-base: 16px;
 
     /* Border radiuses */
     --br-71xl: 90px;
