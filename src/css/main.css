@@ -1,9 +1,16 @@
 #main-background{
     height: 100vh;
-    background-image: url('/public/images/low-angle-view-unrecognizable-muscular-build-man-preparing-lifting-barbell-health-club_637285-2497.avif');
-    background-size: cover;
+    /*background-image: url('/public/images/low-angle-view-unrecognizable-muscular-build-man-preparing-lifting-barbell-health-club_637285-2497.avif');    background-size: cover;*/
+    background-image: url("/public/images/image 8.png");
     background-position: center;
+    background-repeat: no-repeat; /* 🔥 이미지 반복 방지 */
+    background-size: cover;
     width: 100%;
+    display: flex; /* 🔥 내부 요소 정렬을 위해 flex 사용 */
+    justify-content: center; /* 🔥 가로 중앙 정렬 */
+    align-items: center; /* 🔥 세로 중앙 정렬 */
+    position: relative; /* 🔥 내부 요소 위치 조정 가능하게 설정 */
+
 }
 #product-button{
     position: absolute;
@@ -19,4 +26,36 @@
 }
 #product-button:hover{
     opacity: 0.9;
+}
+#main-home-text{
+    position: absolute; /* 🔥 배경 위에 올리기 */
+    color: white; /* 글씨 색상 (배경과 대비되도록 설정) */
+    font-size: 50px; /* 글씨 크기 */
+    font-weight: bold; /* 글씨 두께 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* 🔥 글씨 가독성 높이기 */
+}
+#main-home-menu-div{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    background: black;
+    height: 500px;
+    background: linear-gradient(
+            rgba(1, 1, 1, 1),  /* 위쪽: 불투명한 검정 */
+            rgba(0, 0, 0, 0)   /* 아래쪽: 반투명한 검정 */
+    );
+    justify-content: space-around;
+}
+.health-menu{
+    margin-top: 20px;
+}
+.health-menu>button{
+    border: none;
+    color: white;
+    background: none;
+}
+.health-menu>button:hover{
+    border-bottom: 2px solid white;
 }
