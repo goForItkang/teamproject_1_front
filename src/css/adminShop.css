@@ -1,0 +1,32 @@
+#admin-item-div{
+
+    display: flex;
+    height: 90%;
+}
+#admin-adminShop-div {
+    height: 90vh;
+}
+.admin-items{
+    display: grid;
+    width: 750px;
+}
+.admin-items>div{
+    display: flex;
+    border: 1px solid black;
+    height: 220px;
+    width: 100%;
+}
+#item-info{
+    margin-left: 10px;
+    width: 300px;
+    border-radius: 10px;
+
+}
+#item-info-button-div{
+    display: grid;
+    margin-top: 20px;
+}
+#item-info-button-div>button{
+
+    margin-top: 5px;
+}

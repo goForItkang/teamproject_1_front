@@ -25,6 +25,8 @@
     transform-origin: 0 0;
     z-index: 1;
 }
+
+
 .rectangleParent {
     position: absolute;
     top: 0px;
@@ -136,19 +138,18 @@
     display: none;
     max-width: 100%;
 }
-.b {
-    position: relative;
-    font-size: var(--font-size-base);
-    display: inline-block;
-    font-family: var(--font-inter);
-    color: var(--color-white);
-    text-align: left;
-    min-width: 60px;
-    white-space: nowrap;
-    z-index: 1;
-}
+/*.b {*/
+/*    position: relative;*/
+/*    font-size: var(--font-size-base);*/
+/*    display: inline-block;*/
+/*    font-family: var(--font-inter);*/
+/*    color: var(--color-white);*/
+/*    text-align: left;*/
+/*    min-width: 60px;*/
+/*    white-space: nowrap;*/
+/*    z-index: 1;*/
+/*}*/
 .structure6 {
-    border: 2px solid var(--color-gainsboro); /* 두께 2px, 실선, 빨간색 */
     border-radius: var(--br-71xl);
     background-color: var(--color-gainsboro);
     display: flex;
@@ -159,7 +160,6 @@
     var(--padding-249xl);
     box-sizing: border-box;
     max-width: 100%;
-    width:100%;
 }
 .structure5 {
     margin: 0;
@@ -216,9 +216,6 @@
     font-size: var(--font-size-xl);
     color: var(--color-black);
     font-family: var(--font-inter);
-
-    /*고정 사이즈 디자인이 있어서 임시방편으로 최소 사이즈를 제한해놓음*/
-    min-width:1200px;
 }
 
 @media screen and (max-width: 650px) {
@@ -264,31 +261,214 @@
 }
 
 
-.form {
-    margin: 0;
+
+/*------------추가----------------*/
+
+
+
+
+
+
+
+
+
+.navigationButtons {
     align-self: stretch;
-    height: 400px;
+    height: 36px;
+    position: relative;
+}
+.navigationButtonsWrapper {
+    width: 48.3px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: var(--gap-26xl);
-    max-width: 100%;
+    padding: var(--padding-8xs) 0px 0px;
+    box-sizing: border-box;
 }
-
-.formStructure {
-    align-self: stretch;
+.health {
+    position: relative;
+    display: inline-block;
+    min-width: 66px;
+    flex-shrink: 0;
+    z-index: 1;
+}
+.shop {
+    margin-top: -2px;
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.shopWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px 0px 0px;
+}
+.healthParent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.frameGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-5xs-7);
+}
+.lineDiv {
+    width: 2px;
+    height: 32px;
+    position: relative;
+    border-right: 2px solid var(--color-black);
+    box-sizing: border-box;
+}
+.lineWrapper {
+    height: 39px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 9px 0px 0px;
+    box-sizing: border-box;
+}
+.b {
+    position: relative;
+    white-space: nowrap;
+}
+.passwordResetLabel {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: var(--gap-5xs);
+    padding: var(--padding-smi) 0px 0px;
+}
+.frameParent {
+    width: 277px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 19px;
+}
+.topNavigation {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0px var(--padding-12xs) 0px 0px;
+}
+.changePasswordButtonChild {
+    height: 50px;
+    width: 595px;
+    position: relative;
+    border-radius: var(--br-71xl);
+    background-color: var(--color-gainsboro);
+    display: none;
     max-width: 100%;
-    text-align: left;
+}
+.b1 {
+    position: relative;
     font-size: var(--font-size-base);
-    color: var(--color-gainsboro);
+    display: inline-block;
     font-family: var(--font-inter);
+    color: var(--color-white);
+    text-align: left;
+    min-width: 94px;
+    white-space: nowrap;
+    z-index: 1;
+}
+.changePasswordButton {
+    border-radius: var(--br-71xl);
+    background-color: var(--color-gainsboro);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) 250px var(--padding-base);
+    box-sizing: border-box;
+    max-width: 100%;
+}
+.passwordResetForm {
+    margin: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--gap-21xl);
+    max-width: 100%;
+}
+.div {
+    width: 100%;
+    position: relative;
+    background-color: var(--color-white);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 206px var(--padding-323xl);
+    box-sizing: border-box;
+    gap: var(--gap-41xl);
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    font-size: var(--font-size-xl);
+    color: var(--color-black);
+    font-family: var(--font-inter);
+}
+
+@media screen and (max-width: 650px) {
+    .div {
+        gap: var(--gap-11xl);
+        padding-left: var(--padding-152xl);
+        padding-right: var(--padding-152xl);
+        box-sizing: border-box;
+    }
+}
+@media screen and (max-width: 625px) {
+    .changePasswordButton {
+        padding-left: var(--padding-106xl);
+        padding-right: var(--padding-106xl);
+        box-sizing: border-box;
+    }
+
+    .passwordResetForm {
+        gap: var(--gap-xl);
+    }
+}
+@media screen and (max-width: 450px) {
+    .health {
+        font-size: var(--font-size-base);
+    }
+
+    .shop {
+        font-size: var(--font-size-base);
+    }
+
+    .b {
+        font-size: var(--font-size-base);
+    }
+
+    .changePasswordButton {
+        padding-left: var(--padding-xl);
+        padding-right: var(--padding-xl);
+        box-sizing: border-box;
+    }
+
+    .div {
+        gap: var(--gap-mini);
+        padding-left: var(--padding-xl);
+        padding-right: var(--padding-xl);
+        box-sizing: border-box;
+    }
 }
 
 

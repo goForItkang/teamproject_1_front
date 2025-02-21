@@ -146,3 +146,23 @@
 .pagination button:hover {
     background-color: #0056b3;
 }
+
+.img{
+    max-width: 100%; /* 부모 요소의 크기에 맞게 이미지 크기를 설정 */
+    height: auto;    /* 높이는 자동으로 비율에 맞춰 설정 */
+    object-fit: contain;
+}
+
+
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 30px;
+    background-color: #f9f9f9;
+}
+
+.itemImageSection {
+    flex: 1;
+    max-width: 400px;
+}

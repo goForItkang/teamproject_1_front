@@ -15,13 +15,9 @@ export const validatePassword = async (password) => {
             body: JSON.stringify({password}),
             credentials: 'include'
         });
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
-        }
-
-        return response.ok;
+        return response
     } catch (error) {
+        alert('서버와의 연결에 실패했습니다.')
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }
 };

@@ -1,17 +1,15 @@
 
-import {
-    InputEmailTokenWithButton, InputEmailWithButton,
-    InputName,
+import {InputEmailTokenWithButton, InputEmailWithButton,
     InputPassword,
 } from "../component/InputFields";
-import styles from "../css/signup.module.css";
+import styles from "../css/forgotPassword.module.css";
 import React, {useEffect, useState} from "react";
-import {LoginLogo} from "../component/Logo";
+import {ForgotPasswordLogo} from "../component/Logo";
 import {SubmitButton} from "../component/SubmitButton";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {getUserByEmail} from "../api/UserApi";
+import {useNavigate} from "react-router-dom";
+import {getUserByEmail, patchForgotPassword} from "../api/UserApi";
 import {authEmail, sendEmail} from "../api/EmailTokenApi";
-import {LinkLoginAndFindPassword} from "../component/LinkFields";
+
 
 const Signup = () => {
     return (
@@ -23,18 +21,13 @@ const Signup = () => {
 
 
 const SignupForm = () => {
-    const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
-    const LOGIN_ENDPOINT = '/api/signup';
     const navigate = useNavigate();
 
-    const [searchParams] = useSearchParams();
     const [email, setEmail] = useState('');
     const [authCode, setAuthCode] = useState('');
     const [password, setPassword] = useState("")
     const [currentPassword, setCurrentPassword] = useState("")
-    const [username, setUsername] = useState("")
-    // const [birthday, setBirthday] = useState("")
-    // const [phoneNumber, setPhoneNumber] = useState("")
+
     const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 상태
     const [isSubmitEmail, setIsSubmitEmail] = useState(false)
     const [isFailEmail, setIsFailEmail] = useState(false)
@@ -42,12 +35,7 @@ const SignupForm = () => {
     const [isFailAuth, setIsFailAuth] = useState(false)
     const [isFailCurrentPassword, setIsFailCurrentPassword] = useState(false)
 
-    useEffect(() => {
-        const emailParam = searchParams.get('email');  // 'email' 쿼리 파라미터 값을 가져옴
-        if (emailParam) {
-            setEmail(emailParam);  // email 값을 상태에 설정
-        }
-    }, [searchParams]);  // searchParams가 변경될 때마다 실행
+
 
 
     useEffect(() => {
@@ -55,7 +43,6 @@ const SignupForm = () => {
     }, [currentPassword, password]);
 
     const checkedCurrentPassword = () => {
-        // console.log("currentPassword : " + currentPassword)
         if(currentPassword !== "" && password !== currentPassword){
             setIsFailCurrentPassword(true)
         }
@@ -67,10 +54,10 @@ const SignupForm = () => {
     // 이메일 인증 보내기
     const handleSendEmail = async () => {
 
-        //중복 회원 검사1
+        //회원 검사
         try{
             const response = await getUserByEmail(email);
-            if(response != null){
+            if(response == null){
                 setIsSubmitEmail(false)
                 setIsFailEmail(true)
                 // alert("이미 사용 중인 이메일입니다.")
@@ -88,7 +75,7 @@ const SignupForm = () => {
             // alert('이메일 인증 링크가 전송되었습니다.');
             const response = await sendEmail({ email });
         } catch (error) {
-            // alert(error.message);
+            alert(error.message);
         }
     };
 
@@ -119,13 +106,11 @@ const SignupForm = () => {
             return false
         }
 
-
         return (
             email !== "" &&
             authCode !== "" &&
             password !== "" &&
-            currentPassword !== "" &&
-            username !== ""
+            currentPassword !== ""
         );
     }
 
@@ -134,35 +119,15 @@ const SignupForm = () => {
         e.preventDefault(); // 기본 폼 제출 방지
 
 
-        // 폼 데이터 수집
-        const formData = {
-            email,
-            password,
-            username,
-            // phoneNumber,
-            // birthday
-        };
-
         try {
+            // 비밀번호 변경 요청
+            await patchForgotPassword(email, password);
+            alert('비밀번호가 변경되었습니다')
+            navigate('/')
 
-            // 회원가입 요청
-            const response = await fetch(`${BASE_URL}${LOGIN_ENDPOINT}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                alert('회원가입에 성공했습니다');
-                navigate('/')
-            } else {
-                // alert('회원가입 실패');
-            }
         } catch (err) {
             console.error(err);
-            // alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+            alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
         }
     };
 
@@ -172,10 +137,8 @@ const SignupForm = () => {
 
         <>
 
-            {/*로그인 - 이메일, 비밀번호1*/}
-
             <div className={styles.div}>
-                <LoginLogo/>
+                <ForgotPasswordLogo/>
                 <form onSubmit={handleSubmit} className={styles.form}  onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}>
                     <div className={styles.formStructure}>
                         <InputEmailWithButton
@@ -193,36 +156,27 @@ const SignupForm = () => {
                             isFail = {isFailAuth}
                         />
                         <InputPassword
+                            id="password"
                             isFail={false}
-                            placeholder="비밀번호"
+                            placeholder="새 비밀번호"
                             onChange={setPassword}
                         />
                         <InputPassword
+                            id="currentPassword"
                             isFail={isFailCurrentPassword}
-                            placeholder="비밀번호 확인"
+                            placeholder="새 비밀번호 확인"
                             onChange={setCurrentPassword}
                         />
-                        <InputName
-                            onChange={setUsername}
-                        />
-                        {/*<InputBirthday*/}
-                        {/*    onChange={setBirthday}*/}
-                        {/*/>*/}
-                        {/*<InputPhoneNumber*/}
-                        {/*    onChange={setPhoneNumber}*/}
-                        {/*/>*/}
+
                     </div>
                     <SubmitButton
-                        buttonName="회원가입"
+                        buttonName="비밀번호 변경"
                         isSubmitPossible={isSubmitPossible}
                     />
                 </form>
 
-                {/*div : form과 Link사이에 간격 늘리는 용도*/}
-                <div></div>
-                <LinkLoginAndFindPassword/>
-            </div>
 
+            </div>
         </>
 
     )

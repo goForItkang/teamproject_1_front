@@ -1,0 +1,45 @@
+.b {
+    position: relative;
+    font-size: var(--font-size-base);
+    display: inline-block;
+    font-family: var(--font-inter);
+    color: var(--color-white);
+    text-align: center;
+    min-width: 46px;
+    white-space: nowrap;
+    z-index: 1;
+    width:100%;
+
+}
+
+.disableButton {
+    border-radius: var(--br-71xl);
+    border: 2px solid var(--color-gainsboro);
+    background-color: var(--color-gainsboro);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) 227px 16px var(--padding-209xl);
+    box-sizing: border-box;
+    max-width: 100%;
+    pointer-events: none;
+    width:100%;
+}
+
+.ableButton {
+    border-radius: var(--br-71xl);
+    border: 2px solid var(--color-black);
+    background-color: var(--color-black);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-mini) var(--padding-207xl) var(--padding-2xs)
+    var(--padding-209xl);
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: pointer;
+    width:100%;
+    cursor: pointer;
+}

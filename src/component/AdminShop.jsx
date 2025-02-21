@@ -3,7 +3,7 @@ import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import PageBar from './PageBar'; // PageBar 컴포넌트 불러오기
-import "../css/adminShop.css"
+// import "../css/adminShop.css"
 const AdminShop = () => {
     const parameter = useParams();
     const [item, setItem] = useState([]);

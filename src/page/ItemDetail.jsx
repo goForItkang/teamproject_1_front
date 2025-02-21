@@ -49,13 +49,13 @@ const ItemDetailForm = () => {
     return (
         <div className={styles.itemContainer}>
             <div className={styles.itemImageSection}>
-                <img src={item.itemImg} alt={item.itemName} className={styles.itemImage} />
+                <img src={item.itemImg} alt={item.itemName} className={styles.itemImage}/>
             </div>
             <div className={styles.itemInfoSection}>
                 <h1 className={styles.itemTitle}>{item.itemName}</h1>
                 <p className={styles.itemDescription}>{item.itemDesc}</p>
                 <div className={styles.priceSection}>
-                    <span className={styles.originalPrice}>{item.itemOriginPrice.toLocaleString()}원</span>
+                    <span className={styles.originalPrice}>{item.itemPrice.toLocaleString()}원</span>
                     <span className={styles.stock}>
                         재고: {item.itemStock > 0 ? `${item.itemStock}개` : "품절"}
                     </span>
@@ -64,6 +64,7 @@ const ItemDetailForm = () => {
                     <p>브랜드: {item.itemBrand}</p>
                     <p>카테고리: {item.category}</p>
                     <p>평점: {item.averageRating}</p>
+                    <button className={styles.buyButton}> 구매하기</button>
                 </div>
             </div>
         </div>
@@ -71,7 +72,7 @@ const ItemDetailForm = () => {
 };
 
 const CommentForm = () => {
-    const { itemId } = useParams();
+    const {itemId} = useParams();
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [childComments, setChildComments] = useState({});

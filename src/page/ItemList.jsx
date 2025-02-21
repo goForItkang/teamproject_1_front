@@ -68,7 +68,7 @@ const ItemListForm = () => {
         }
     };
 
-    // 수정 버튼 클릭 핸들러
+    // 수정 버튼 클릭 핸들러.
     const handleEdit = (id) => {
         navigate(`/admin/item/edit/${id}`); // 수정 페이지로 이동
     };
@@ -91,32 +91,39 @@ const ItemListForm = () => {
             {items && items.length > 0 ? (
                 <ul className={styles.itemList}>
                     {items.map((item) => (
-                        <li key={item.id}>
-                            <h3>{item.itemName}</h3>
-                            <p>{`평점 : ${item.averageRating}`}</p>
-                            <p>{item.category}</p>
-                            <p>{item.itemDesc}</p>
-                            <p className={styles.price}>{item.itemOriginPrice} 원</p>
-                            <Link to={`/item/${item.id}`} className={styles.link}>상세보기</Link>
+                        <div>
+
+                            <li key={item.id}>
+                                <div className={styles.itemImageSection}>
+                                    <img src={item.itemImg} alt={item.itemName} className={styles.img}/>
+                                </div>
+
+                                <h3>{item.itemName}</h3>
+                                <p>{`평점 : ${item.averageRating}`}</p>
+                                <p>{item.category}</p>
+                                <p>{item.itemDesc}</p>
+                                <p className={styles.price}>{item.itemPrice} 원</p>
+                                <Link to={`/item/${item.id}`} className={styles.link}>상세보기</Link>
 
 
-                            {/*ADMIN 사용자로 제한 예정*/}
-                            {(user === "ROLE_ADMIN" || user === "ROLE_USER") && (
-                                <>
-                                    <button
-                                        className={styles.editButton}
-                                        onClick={() => handleEdit(item.id)}>
-                                        수정
-                                    </button>
-                                    <button
-                                        className={styles.deleteButton}
-                                        onClick={() => handleDelete(item.id, item.itemImg)}>
-                                        삭제
-                                    </button>
-                                </>
-                            )}
+                                {/*/!*ADMIN 사용자로 제한 예정*!/*/}
+                                {/*{(user === "ROLE_ADMIN" || user === "ROLE_USER") && (*/}
+                                {/*    <>*/}
+                                {/*        <button*/}
+                                {/*            className={styles.editButton}*/}
+                                {/*            onClick={() => handleEdit(item.id)}>*/}
+                                {/*            수정*/}
+                                {/*        </button>*/}
+                                {/*        <button*/}
+                                {/*            className={styles.deleteButton}*/}
+                                {/*            onClick={() => handleDelete(item.id, item.itemImg)}>*/}
+                                {/*            삭제*/}
+                                {/*        </button>*/}
+                                {/*    </>*/}
+                                {/*)}*/}
 
-                        </li>
+                            </li>
+                        </div>
                     ))}
                 </ul>
             ) : (
