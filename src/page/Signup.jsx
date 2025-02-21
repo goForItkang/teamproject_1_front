@@ -1,9 +1,8 @@
 
 import {
-    InputBirthday, InputEmailTokenWithButton, InputEmailWithButton,
+    InputEmailTokenWithButton, InputEmailWithButton,
     InputName,
     InputPassword,
-    InputPhoneNumber
 } from "../component/InputFields";
 import styles from "../css/signup.module.css";
 import React, {useEffect, useState} from "react";
@@ -34,16 +33,14 @@ const SignupForm = () => {
     const [password, setPassword] = useState("")
     const [currentPassword, setCurrentPassword] = useState("")
     const [username, setUsername] = useState("")
-    const [birthday, setBirthday] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
+    // const [birthday, setBirthday] = useState("")
+    // const [phoneNumber, setPhoneNumber] = useState("")
     const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 상태
     const [isSubmitEmail, setIsSubmitEmail] = useState(false)
     const [isFailEmail, setIsFailEmail] = useState(false)
     const [isCheckedAuth, setIsCheckedAuth] = useState(false)
     const [isFailAuth, setIsFailAuth] = useState(false)
     const [isFailCurrentPassword, setIsFailCurrentPassword] = useState(false)
-
-    const [isFail, setIsFail] = useState(false);
 
     useEffect(() => {
         const emailParam = searchParams.get('email');  // 'email' 쿼리 파라미터 값을 가져옴
@@ -128,9 +125,7 @@ const SignupForm = () => {
             authCode !== "" &&
             password !== "" &&
             currentPassword !== "" &&
-            username !== "" &&
-            birthday !== "" &&
-            phoneNumber !== ""
+            username !== ""
         );
     }
 
@@ -144,8 +139,8 @@ const SignupForm = () => {
             email,
             password,
             username,
-            phoneNumber,
-            birthday
+            // phoneNumber,
+            // birthday
         };
 
         try {
@@ -160,9 +155,8 @@ const SignupForm = () => {
             });
 
             if (response.ok) {
-                alert('회원가입 완료');
+                alert('회원가입에 성공했습니다');
                 navigate('/')
-                // alert('회원가입 성공');
             } else {
                 // alert('회원가입 실패');
             }
@@ -211,12 +205,12 @@ const SignupForm = () => {
                         <InputName
                             onChange={setUsername}
                         />
-                        <InputBirthday
-                            onChange={setBirthday}
-                        />
-                        <InputPhoneNumber
-                            onChange={setPhoneNumber}
-                        />
+                        {/*<InputBirthday*/}
+                        {/*    onChange={setBirthday}*/}
+                        {/*/>*/}
+                        {/*<InputPhoneNumber*/}
+                        {/*    onChange={setPhoneNumber}*/}
+                        {/*/>*/}
                     </div>
                     <SubmitButton
                         buttonName="회원가입"

@@ -1,68 +1,68 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
-body {
-    margin: 0;
-    line-height: normal;
-}
-:root {
-    /* fonts */
-    --font-inter: Inter;
+/*@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");*/
+/*body {*/
+/*    margin: 0;*/
+/*    line-height: normal;*/
+/*}*/
+/*:root {*/
+/*    !* fonts *!*/
+/*    --font-inter: Inter;*/
 
-    /* font sizes */
-    --font-size-base: 16px;
-    --font-size-xl: 20px;
+/*    !* font sizes *!*/
+/*    --font-size-base: 16px;*/
+/*    --font-size-xl: 20px;*/
 
-    /* Colors */
-    --color-white: #fff;
-    --color-gainsboro: #d9d9d9;
-    --color-black: #000;
-    --color-tomato: #ff3f3f;
+/*    !* Colors *!*/
+/*    --color-white: #fff;*/
+/*    --color-gainsboro: #d9d9d9;*/
+/*    --color-black: #000;*/
+/*    --color-tomato: #ff3f3f;*/
 
-    /* Gaps */
-    --gap-41xl: 60px;
-    --gap-mini: 15px;
-    --gap-11xl: 30px;
-    --gap-3xs: 10px;
-    --gap-21xl: 40px;
-    --gap-xl: 20px;
-    --gap-5xs: 8px;
-    --gap-5xl-4: 24.4px;
-    --gap-2xl: 21px;
-    --gap-5xl: 24px;
-    --gap-3xl: 22px;
-    --gap-5xs-7: 7.7px;
-    --gap-16xl: 35px;
-    --gap-mid: 17px;
+/*    !* Gaps *!*/
+/*    --gap-41xl: 60px;*/
+/*    --gap-mini: 15px;*/
+/*    --gap-11xl: 30px;*/
+/*    --gap-3xs: 10px;*/
+/*    --gap-21xl: 40px;*/
+/*    --gap-xl: 20px;*/
+/*    --gap-5xs: 8px;*/
+/*    --gap-5xl-4: 24.4px;*/
+/*    --gap-2xl: 21px;*/
+/*    --gap-5xl: 24px;*/
+/*    --gap-3xl: 22px;*/
+/*    --gap-5xs-7: 7.7px;*/
+/*    --gap-16xl: 35px;*/
+/*    --gap-mid: 17px;*/
 
-    /* Paddings */
-    --padding-371xl: 390px;
-    --padding-99xl: 118px;
-    --padding-xl: 20px;
-    --padding-176xl: 195px;
-    --padding-mini: 15px;
-    --padding-2xs: 11px;
-    --padding-xs: 12px;
-    --padding-5xl: 24px;
-    --padding-4xl: 23px;
-    --padding-5xs: 8px;
-    --padding-3xl: 22px;
-    --padding-11xs: 2px;
-    --padding-12xs: 1px;
-    --padding-8xs: 5px;
-    --padding-151xl: 170px;
-    --padding-145xl: 164px;
-    --padding-207xl: 226px;
-    --padding-209xl: 228px;
-    --padding-95xl: 114px;
-    --padding-94xl: 113px;
-    --padding-9xs: 4px;
-    --padding-2xl: 21px;
+/*    !* Paddings *!*/
+/*    --padding-371xl: 390px;*/
+/*    --padding-99xl: 118px;*/
+/*    --padding-xl: 20px;*/
+/*    --padding-176xl: 195px;*/
+/*    --padding-mini: 15px;*/
+/*    --padding-2xs: 11px;*/
+/*    --padding-xs: 12px;*/
+/*    --padding-5xl: 24px;*/
+/*    --padding-4xl: 23px;*/
+/*    --padding-5xs: 8px;*/
+/*    --padding-3xl: 22px;*/
+/*    --padding-11xs: 2px;*/
+/*    --padding-12xs: 1px;*/
+/*    --padding-8xs: 5px;*/
+/*    --padding-151xl: 170px;*/
+/*    --padding-145xl: 164px;*/
+/*    --padding-207xl: 226px;*/
+/*    --padding-209xl: 228px;*/
+/*    --padding-95xl: 114px;*/
+/*    --padding-94xl: 113px;*/
+/*    --padding-9xs: 4px;*/
+/*    --padding-2xl: 21px;*/
 
-    /* Border radiuses */
-    --br-71xl: 90px;
-    --br-8xs: 5px;
-}
+/*    !* Border radiuses *!*/
+/*    --br-71xl: 90px;*/
+/*    --br-8xs: 5px;*/
+/*}*/
 
-/*위는 global.css*/
+/*!*위는 global.css*!*/
 
 
 .frameChild {

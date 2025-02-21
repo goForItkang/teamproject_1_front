@@ -39,6 +39,8 @@ body {
     --gap-9xs: 4px;
     --gap-10xs: 3px;
     --gap-4xs: 9px;
+    --gap-380xl: 399px;
+    --gap-394xl: 413px;
 
     /* Paddings */
     --padding-80xl: 99px;
@@ -79,8 +81,12 @@ body {
     --padding-11xl: 30px;
     --padding-106xl: 125px;
     --padding-base: 16px;
+    --padding-mid: 17px;
+    --padding-21xl: 40px;
+    --padding-3xs: 10px;
 
     /* Border radiuses */
     --br-71xl: 90px;
     --br-8xs: 5px;
+    --br-xl: 20px;
 }

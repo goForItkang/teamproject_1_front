@@ -1,6 +1,6 @@
 import styles from "../css/inputFields.module.css";
-import React, {useState} from "react";
-import DatePicker from "react-datepicker";
+import React, {useEffect, useState} from "react";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const InputField = ({imageStyle,imageSrc, ...props}) =>{
@@ -65,28 +65,28 @@ export const InputFieldWithButton = ({inputStyle,imageStyle,imageSrc, buttonName
         <>
             {/*<div className = {styles.topInputFieldsStructure}> </div>*/}
             {/*<div className={styles.inputFieldsStructure}>*/}
-                <div className={styles[getInputStyle()]}>
-                    <div className={styles.topInputFieldsStructureChild}/>
-                    <div className={styles.iconInputFields}>
-                        <img className={styles[imageStyle]} alt="" src={`/images${imageSrc}`}/>
-                    </div>
-                    <input
-                        className={styles.input}
-                        {...props}
-                        onFocus={(e)=>handleFocus(e)}
-                        onBlur={(e)=>handleBlur(e)}
-                        onChange={(e) => handleChange(e)}
-                    />
+            <div className={styles[getInputStyle()]}>
+                <div className={styles.topInputFieldsStructureChild}/>
+                <div className={styles.iconInputFields}>
+                    <img className={styles[imageStyle]} alt="" src={`/images${imageSrc}`}/>
                 </div>
-                <button
+                <input
+                    className={styles.input}
                     {...props}
-                    id={`button${props.id}`}
-                    type="button"
-                    className={styles[getButtonDesign()]}
-                    onClick = {onClick}>
-                    <div className={styles.bottomInputFieldsStructureChild}/>
-                    <div className={styles.div123}>{buttonName}</div>
-                </button>
+                    onFocus={(e)=>handleFocus(e)}
+                    onBlur={(e)=>handleBlur(e)}
+                    onChange={(e) => handleChange(e)}
+                />
+            </div>
+            <button
+                {...props}
+                id={`button${props.id}`}
+                type="button"
+                className={styles[getButtonDesign()]}
+                onClick = {onClick}>
+                <div className={styles.bottomInputFieldsStructureChild}/>
+                <div className={styles.div123}>{buttonName}</div>
+            </button>
             {/*</div>*/}
         </>
     )
@@ -260,7 +260,7 @@ export const InputPassword = ({isFail, placeholder, ...props}) => {
                         // id="password"
                         name="password"
                         placeholder={placeholder}
-                        value={password}
+                        // value={password}
                         onFocus={() => setFocusPassword(true)}
                         onBlur={() => setFocusPassword(false)}
                         onChange={(e) => handleChange(e)}
@@ -310,17 +310,17 @@ export const InputName = ({...props}) => {
     return (
         <>
             {/*<div className={styles.inputFieldsStructureName}>*/}
-                <InputField
-                    imageStyle="iconPerson"
-                    imageSrc={getNameImage()}
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="닉네임"
-                    onFocus={() => setFocusName(true)}
-                    onBlur={() => setFocusName(false)}
-                    onChange={(e) => handleChange(e)}
-                />
+            <InputField
+                imageStyle="iconPerson"
+                imageSrc={getNameImage()}
+                type="text"
+                id="username"
+                name="username"
+                placeholder="닉네임"
+                onFocus={() => setFocusName(true)}
+                onBlur={() => setFocusName(false)}
+                onChange={(e) => handleChange(e)}
+            />
             {/*</div>*/}
 
         </>
@@ -328,46 +328,46 @@ export const InputName = ({...props}) => {
 }
 
 
-export const InputBirthday = ({...props}) =>{
-    const [birthday, setBirthday] = useState(null)
-    const [focusBirthday, setFocusBirthday] = useState(false)
-
-    const getBirthdayImage = () =>{
-        if(focusBirthday === true || birthday !== null) return "/-icon-birthday-fill.png"
-        else return "/-icon-birthday-none.svg"
-    }
-
-    const handleChange = (date) =>{
-        setBirthday(date)
-        props.onChange(date)
-    }
-
-
-    return (
-        <>
-            <div className={styles.inputFieldsStructureBirthday}>
-                <div className={styles.inputFieldsChild}/>
-                <div className={styles.iconFields}>
-                    <img className={styles.iconBirthday} alt="" src={`/images${getBirthdayImage()}`}/>
-                </div>
-                {/*input - type(date)는 브라우저에서 지원하는 기본 폰트로 고정돼서 DatePicker로 제작*/}
-                <DatePicker
-                    className={styles.input}
-                    wrapperClassName={styles['date-picker-wrapper']}
-                    selected={birthday}
-                    onChange={date => handleChange(date)}
-                    placeholderText="연도-월-일"
-                    dateFormat="yyyy-MM-dd"
-                    popperPlacement="bottom-start"
-                    onFocus={() => setFocusBirthday(true)}
-                    onBlur={() => setFocusBirthday(false)}
-                />
-            </div>
-
-
-        </>
-    )
-}
+// export const InputBirthday = ({...props}) =>{
+//     const [birthday, setBirthday] = useState(null)
+//     const [focusBirthday, setFocusBirthday] = useState(false)
+//
+//     const getBirthdayImage = () =>{
+//         if(focusBirthday === true || birthday !== null) return "/-icon-birthday-fill.png"
+//         else return "/-icon-birthday-none.svg"
+//     }
+//
+//     const handleChange = (date) =>{
+//         setBirthday(date)
+//         props.onChange(date)
+//     }
+//
+//
+//     return (
+//         <>
+//             <div className={styles.inputFieldsStructureBirthday}>
+//                 <div className={styles.inputFieldsChild}/>
+//                 <div className={styles.iconFields}>
+//                     <img className={styles.iconBirthday} alt="" src={`/images${getBirthdayImage()}`}/>
+//                 </div>
+//                 {/*input - type(date)는 브라우저에서 지원하는 기본 폰트로 고정돼서 DatePicker로 제작*/}
+//                 <DatePicker
+//                     className={styles.input}
+//                     wrapperClassName={styles['date-picker-wrapper']}
+//                     selected={birthday}
+//                     onChange={date => handleChange(date)}
+//                     placeholderText="연도-월-일"
+//                     dateFormat="yyyy-MM-dd"
+//                     popperPlacement="bottom-start"
+//                     onFocus={() => setFocusBirthday(true)}
+//                     onBlur={() => setFocusBirthday(false)}
+//                 />
+//             </div>
+//
+//
+//         </>
+//     )
+// }
 
 export const InputPhoneNumber = ({...props}) =>{
     const [phoneNumber, setPhoneNumber] = useState("")
@@ -386,19 +386,131 @@ export const InputPhoneNumber = ({...props}) =>{
     return (
         <>
             {/*<div className={styles.inputFieldsStructurePhone}>*/}
-                <InputField
-                    imageStyle="iconPerson"
-                    imageSrc={getPhoneImage()}
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="전화번호"
-                    onFocus={() => setFocusPhoneNumber(true)}
-                    onBlur={() => setFocusPhoneNumber(false)}
-                    onChange={(e) => handleChange(e)}
-                />
+            <InputField
+                imageStyle="iconPerson"
+                imageSrc={getPhoneImage()}
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="전화번호"
+                onFocus={() => setFocusPhoneNumber(true)}
+                onBlur={() => setFocusPhoneNumber(false)}
+                onChange={(e) => handleChange(e)}
+            />
             {/*</div>*/}
         </>
     )
 }
 
+export const InputReviseWithButton = ({onChange, submitHandle}) =>{
+
+    return (
+
+        <div className={styles.reviseField}>
+            <input
+                className={styles.reviseInput}
+                onChange={onChange}
+            />
+            <button
+                className={styles.reviseButton}
+                onClick={submitHandle}
+            >수정
+            </button>
+        </div>
+    )
+}
+
+export const InputReviseField = ({value,onChange,submitHandle,...props}) => {
+    const [text, setText] = useState("");
+    const [isRevision, setIsRevision] = useState(false);
+
+    useEffect(() => {
+        setText(value);
+    }, [value]);
+
+    const getTextWidth = (text, font) => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.font = font;
+        const width = context.measureText(text).width;
+        return width;
+    };
+
+    const inputWidth = `${getTextWidth(text, '16px Arial')*1.5 + 10}px`;
+
+    // const handleChange = (e) => {
+    //     setText(e.target.value);
+    //     // props.onChange(e.target.value)
+    // };
+
+    const toggleIsRevision = (e) => {
+        setIsRevision(!isRevision)
+    }
+
+    return (
+        <>
+
+            {!isRevision &&
+                // <div className={styles.reviseContainer}>
+                //     <div className={styles.reviseInput}>
+                <div className={styles.reviseField}>
+                    <input
+                        className={styles.reviseInputField}
+                        style={{width: inputWidth}}
+                        value={text}
+                        disabled
+                        // onChange={(e) => handleChange(e)}
+                    />
+                    <div className={styles.reviseIcon}>
+                        <img
+                            className={styles.reviseGroupIcon}
+                            alt=""
+                            src="/images/-icon-revise.svg"
+                            onClick={toggleIsRevision}
+                        />
+                    </div>
+                </div>
+                // </div>
+                // </div>
+            }
+
+
+            {
+                isRevision &&
+                <InputReviseWithButton
+                    onChange={onChange}
+                    submitHandle={submitHandle}
+                />
+
+
+            }
+
+        </>
+    )
+}
+
+export const InputFieldDefaultProfile = ({...props}) => {
+    const [text, setText] = useState("");
+
+    // const inputWidth = `${text.length*2 + 3}ch`;
+
+    const handleChange = (e) => {
+        setText(e.target.value);
+        // props.onChange(e.target.value)
+    };
+
+    return (
+
+        <div className={styles.reviseContainer}>
+            <div className={styles.reviseInput}>
+                <div className={styles.reviseField}>
+                    <input
+                        className={styles.reviseInputField}
+                        onChange={(e) => handleChange(e)}
+                    />
+                </div>
+            </div>
+            <div className={styles.reviseContainerChild}/>
+        </div>
+    )
+}

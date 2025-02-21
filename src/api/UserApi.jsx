@@ -127,3 +127,28 @@ export const patchForgotPassword = async (email, password) => {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
     }
 };
+
+export const patchUsername = async (username) => {
+    const ENDPOINT = '/api/user/profile/username'
+    try {
+        const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': jwt
+            },
+            body: JSON.stringify({username}),
+            credentials: 'include'
+        });
+
+        //
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return await response
+    } catch (error) {
+        throw new Error(error.message || '서버와의 연결에 실패했습니다.');
+    }
+};

@@ -36,3 +36,75 @@
     position: relative;
     color: var(--color-black);
 }
+
+.orderContainer {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0px var(--padding-xl);
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.orderHeader {
+    width: 331px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 100%;
+    gap: var(--gap-xl);
+}
+
+.a {
+    text-decoration: none;
+    position: relative;
+    color: inherit;
+}
+
+.accountSettings {
+    /*height: 31px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /*padding: 0px 0px var(--padding-10xs);*/
+    box-sizing: border-box;
+    gap: var(--gap-9xs);
+    color: var(--color-black);
+}
+
+.a2 {
+    text-decoration: none;
+    position: relative;
+    font-weight: 700;
+    color: inherit;
+}
+
+.accountSeparator {
+    display: flex;
+    /*flex-direction: row;*/
+    flex-direction: column;
+    /*align-items: flex-start;*/
+    /*justify-content: flex-start;*/
+    align-items: center;
+    justify-content: center;
+    /*padding: 0px var(--padding-base) 0px var(--padding-xl);*/
+}
+
+.accountSeparatorChild {
+    height: 3px;
+    width: 43px;
+    position: relative;
+    border-top: 3px solid var(--color-black);
+    box-sizing: border-box;
+}
+
+
+.statusFont{
+    font-size: var(--font-size-xl);
+    color: var(--color-gainsboro);
+    font-family: var(--font-inter);
+}
