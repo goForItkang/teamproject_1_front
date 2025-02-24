@@ -785,6 +785,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    /*justify-content: center;*/
     gap: var(--gap-5xs);
     max-width: 100%;
     text-align: left;
@@ -800,4 +801,21 @@
 
 .blankMini{
     height: 15px
+}
+
+
+.submitSuccessMessageBox{
+    display:flex;
+    align-items:center;
+    min-width: 550px;
+    min-height: 50px;
+}
+
+.submitSuccessMessage{
+    color:black;
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    text-align: center;
+    width:100%;
+    /*justify-content: center;*/
 }

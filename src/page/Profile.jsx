@@ -97,6 +97,8 @@ const ChangePasswordForm = () => {
     const [isFailCurrentPassword, setIsFailCurrentPassword] = useState(false)
     const [isFailConfirmNewPassword, setIsFailConfirmNewPassword] = useState(false)
 
+    const [isSubmit, setIsSubmit] = useState(false)
+
 
     useEffect(() => {
         setIsFailCurrentPassword(false);
@@ -152,12 +154,13 @@ const ChangePasswordForm = () => {
             }
 
             // 2. 비밀번호 변경 요청
+            setIsSubmit(true)
             setIsFailCurrentPassword(false)
             await patchPassword(newPassword);
             setCurrentPassword('');
             setNewPassword('');
             setConfirmNewPassword('');
-            alert('비밀번호가 변경되었습니다')
+            // alert('비밀번호가 변경되었습니다')
         } catch (err) {
             alert('서버와의 연결에 실패했습니다')
         }
@@ -201,10 +204,22 @@ const ChangePasswordForm = () => {
 
 
                     </div>
-                    <SubmitButton
-                        buttonName="비밀번호 변경"
-                        isSubmitPossible={isSubmitPossible}
-                    />
+
+                    {
+                        isSubmit === false ?
+
+                            (<SubmitButton
+                                buttonName="비밀번호 변경"
+                                isSubmitPossible={isSubmitPossible}
+                            />) :
+
+                            (
+                                <div className = {styles.submitSuccessMessageBox}>
+                                    <div className={styles.submitSuccessMessage}>비밀번호가 변경되었습니다.</div>
+                                </div>
+                            )
+                    }
+
                 </form>
             </div>
         </>
