@@ -104,8 +104,9 @@ export const updateItem = async (itemForm) => {
 };
 
 //
-export const getItemList = async (size, page) => {
-    const ENDPOINT = `/api/item?size=${size}&page=${page}`
+export const getItemList = async (size, page, sort) => {
+    // sort = new, cheap, expensive, review, recommend
+    const ENDPOINT = `/api/item?size=${size}&page=${page}&sort=${sort}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'GET',
@@ -117,10 +118,10 @@ export const getItemList = async (size, page) => {
         });
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            return false;
         }
 
+        // return response
         return await response.json();
     } catch (error) {
         throw new Error(error.message || '서버와의 연결에 실패했습니다.');
