@@ -291,4 +291,8 @@
     font-family: var(--font-inter);
 }
 
+.formStructure > *{
+    max-height:50px;
+}
+
 

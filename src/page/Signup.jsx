@@ -220,6 +220,7 @@ const SignupForm = () => {
 
                 {/*div : form과 Link사이에 간격 늘리는 용도*/}
                 <div></div>
+
                 <LinkLoginAndFindPassword/>
             </div>
 

@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Header from "./component/Header";
 import Main from "./page/Main";
@@ -13,7 +13,6 @@ import ItemAdd from "./page/ItemAdd";
 import ItemList from "./page/ItemList";
 import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
-import axios from "axios";
 import ForgotPassword from "./page/ForgotPassword";
 
 function App() {

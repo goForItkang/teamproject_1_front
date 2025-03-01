@@ -63,31 +63,30 @@ export const InputFieldWithButton = ({inputStyle,imageStyle,imageSrc, buttonName
 
     return (
         <>
-            {/*<div className = {styles.topInputFieldsStructure}> </div>*/}
-            {/*<div className={styles.inputFieldsStructure}>*/}
-            <div className={styles[getInputStyle()]}>
-                <div className={styles.topInputFieldsStructureChild}/>
-                <div className={styles.iconInputFields}>
-                    <img className={styles[imageStyle]} alt="" src={`/images${imageSrc}`}/>
+            <div className={styles.inputField}>
+                <div className={styles[getInputStyle()]}>
+                    {/*<div className={styles.topInputFieldsStructureChild}/>*/}
+                    <div className={styles.iconInputFields}>
+                        <img className={styles[imageStyle]} alt="" src={`/images${imageSrc}`}/>
+                    </div>
+                    <input
+                        className={styles.input}
+                        {...props}
+                        onFocus={(e)=>handleFocus(e)}
+                        onBlur={(e)=>handleBlur(e)}
+                        onChange={(e) => handleChange(e)}
+                    />
                 </div>
-                <input
-                    className={styles.input}
+                <button
                     {...props}
-                    onFocus={(e)=>handleFocus(e)}
-                    onBlur={(e)=>handleBlur(e)}
-                    onChange={(e) => handleChange(e)}
-                />
+                    id={`button${props.id}`}
+                    type="button"
+                    className={styles[getButtonDesign()]}
+                    onClick = {onClick}>
+                    <div className={styles.bottomInputFieldsStructureChild}/>
+                    <div className={styles.div123}>{buttonName}</div>
+                </button>
             </div>
-            <button
-                {...props}
-                id={`button${props.id}`}
-                type="button"
-                className={styles[getButtonDesign()]}
-                onClick = {onClick}>
-                <div className={styles.bottomInputFieldsStructureChild}/>
-                <div className={styles.div123}>{buttonName}</div>
-            </button>
-            {/*</div>*/}
         </>
     )
 }
