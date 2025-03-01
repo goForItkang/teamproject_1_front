@@ -15,6 +15,7 @@ import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
 import axios from "axios";
 import ForgotPassword from "./page/ForgotPassword";
+import BeforeItemDetail from "./page/BeforeItemDetail";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                     <Route path={"/user/profile/edit"} element={<Profile/>}/>
                     <Route path={"/user/password"} element={<ForgotPassword/>}/>
                     <Route path={"/items"} element={<ItemList/>}/>
+                    <Route path={"/before/item/:itemId"} element={<BeforeItemDetail/>}/>
                     <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
             </Routes>
         </BrowserRouter>
