@@ -4,11 +4,13 @@ import axios from "axios";
 import {getItem} from "../api/ItemApi";
 import Cookies from "js-cookie";
 import MainHomeMenu from "./MainHomeMenu";
+import {useNavigate} from "react-router-dom";
 const Header = () => {
     const JwtCookie = 'JwtCookie';
     const getJwtCookie = () => {
         return Cookies.get(JwtCookie);
     };
+    const nav = useNavigate();
     const jwtCookie = getJwtCookie();
     const [searchData,setSearchData] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -55,6 +57,9 @@ const Header = () => {
                 })
         }
     }, [debouncedSearch]);
+    const pageHandler = (path)=>{
+      nav(`/${path}`);
+    }
     return (
         <header id={"Header"}>
             <div id={"header-logo-div"}>
@@ -70,7 +75,7 @@ const Header = () => {
             </div>
             </div>
             <div id={"header-sub"}>
-                <button className={"main-home-button"}>
+                <button className={"main-home-button"} onClick={() => pageHandler("signup")}>
                     <img src="/images/icon%20_Person_%20.png" alt=""/>
                     <p>로그인</p>
                 </button>
@@ -78,7 +83,7 @@ const Header = () => {
                     <img src="/images/icon%20_Cart_.png" alt=""/>
                     <p>장바구니</p>
                 </button>
-                <button className={"main-home-button"}>
+                <button className={"main-home-button"} >
                     <img src="/images/Group.png" alt=""/>
                     <p>문의</p>
                 </button>

@@ -19,8 +19,8 @@ import ForgotPassword from "./page/ForgotPassword";
 function App() {
   return (
     <div>
-        <Header></Header>
         <BrowserRouter>
+            <Header></Header>
             <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="/chat/:userName" element={<Chat/>}/>
