@@ -10,7 +10,7 @@ import Shop from "./page/Shop";
 import AdminHome from "./adminpage/AdminHome";
 import Profile from "./page/Profile";
 import ItemAdd from "./page/ItemAdd";
-import ItemList from "./page/ItemList";
+import ItemList, {SearchContextProvider} from "./page/ItemList";
 import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
 import ForgotPassword from "./page/ForgotPassword";
@@ -19,21 +19,23 @@ function App() {
   return (
     <div>
         <BrowserRouter>
-            <Header></Header>
-            <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/chat/:userName" element={<Chat/>}/>
-                    <Route path={"/login"} element={<Login/>}/>
-                    <Route path={"/signup"} element={<Signup/>}/>
-                    <Route path={"/shop"} element={<Shop/>}/>
-                    <Route path={"/admin/*"} element={<AdminHome/>}/>
-                    <Route path={"/admin/item/add"} element={<ItemAdd/>}/>
-                    <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
-                    <Route path={"/user/profile/edit"} element={<Profile/>}/>
-                    <Route path={"/user/password"} element={<ForgotPassword/>}/>
-                    <Route path={"/items"} element={<ItemList/>}/>
-                    <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
-            </Routes>
+            <SearchContextProvider>
+                <Header></Header>
+                <Routes>
+                        <Route path="/" element={<Main />} />
+                        <Route path="/chat/:userName" element={<Chat/>}/>
+                        <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/signup"} element={<Signup/>}/>
+                        <Route path={"/shop"} element={<Shop/>}/>
+                        <Route path={"/admin/*"} element={<AdminHome/>}/>
+                        <Route path={"/admin/item/add"} element={<ItemAdd/>}/>
+                        <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
+                        <Route path={"/user/profile/edit"} element={<Profile/>}/>
+                        <Route path={"/user/password"} element={<ForgotPassword/>}/>
+                        <Route path={"/items"} element={<ItemList/>}/>
+                        <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
+                </Routes>
+            </SearchContextProvider>
         </BrowserRouter>
     </div>
   );

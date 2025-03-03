@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {getItemList} from "../api/ItemApi";
 import styles from '../css/itemList.module.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";  // CSS 모듈 import
@@ -8,20 +8,22 @@ const ItemList = () => {
 
 
     return (
-        // <MenuSortContextProvider>
             <div className={styles.body}>
-                <SortingForm />
-                <ItemsForm/>
+                <div className={styles['form-container']}>
+                    <SortingForm />
+                    <ItemsForm/>
+                </div>
             </div>
-        // </MenuSortContextProvider>
     );
 }
 
 export const ItemsForm = () => {
     // const {sortRef} = useContext(MenuSortContext)
+    const { search, setSearch } = useContext(SearchContext);
     const [items, setItems] = useState([]);  // 상품 리스트 상태
     const [page, setPage] = useState(1);  // 현재 페이지 상태
     const [size, setSize] = useState(10);  // 페이지당 아이템 개수 (기본값 10)
+    const [isNoItem, setIsNoItem] = useState(false)
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -85,7 +87,12 @@ export const ItemsForm = () => {
 
 
     useEffect(() => {
-        if (target.current) {
+        if(search === null){
+            setIsNoItem(true)
+        }
+
+
+        else if (target.current) {
             // observer가 초기화된 후 observe 호출
             //target.current 감지
             observer.current.observe(target.current);
@@ -99,24 +106,52 @@ export const ItemsForm = () => {
         // };
     }, []);
 
-    return(
-        <div className={styles.items}>
+    useEffect(() => {
+        if(search === null){
+            setIsNoItem(true)
+        }
 
-            {items.map((item) => (
-                <Item
-                    item={item}
-                    onClick = {() => navigate(`/item/${item.id}`)}
-                />
-            ))
+        else if(search.length !== 0){
+            setIsNoItem(false)
+            setItems(search)
+            setSearch('');
+        }
+
+    }, [search]);
+
+    return(
+        <>
+            {
+                isNoItem === true ? <NoItems/> :
+
+                <div className={styles.items}>
+
+                    {items.map((item) => (
+                        <Item
+                            item={item}
+                            onClick={() => navigate(`/item/${item.id}`)}
+                        />
+                    ))
+                    }
+
+                    <div className={styles.items__loading} ref={target}>
+                        {/* 스크롤 이벤트를 감지할 대상 요소 */}
+                    </div>
+                </div>
             }
 
-            <div className={styles.items__loading} ref={target}>
-                {/* 스크롤 이벤트를 감지할 대상 요소 */}
-            </div>
-        </div>
+
+        </>
     )
 }
 
+const NoItems = () =>{
+    return(
+        <div>
+            아이템 조회 실패
+        </div>
+    )
+}
 
 const Item = ({item, onClick}) => {
     return (
@@ -133,7 +168,7 @@ const Item = ({item, onClick}) => {
                     {`${item.itemPrice}원`}
                 </div>
                 <div className={styles.item__delivery}>
-                    배송비 미정
+                    배송비 0원
                 </div>
                 <div className={styles.item__review}>
                     <div>
@@ -230,6 +265,19 @@ const MenuDelivery = () => {
     )
 }
 
+
+export const SearchContext = createContext(null)
+
+export const SearchContextProvider = (props) => {
+
+    const [search, setSearch] = useState('');
+
+    return (
+        <SearchContext.Provider value={{search, setSearch}}>
+            {props.children}
+        </SearchContext.Provider>
+    )
+}
 
 
 export default ItemList;

@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "../css/header.css"
 import axios from "axios";
 import {getItem} from "../api/ItemApi";
 import Cookies from "js-cookie";
 import MainHomeMenu from "./MainHomeMenu";
 import {useNavigate} from "react-router-dom";
+import {SearchContext} from "../page/ItemList";
 const Header = () => {
+    const { setSearch } = useContext(SearchContext);
     const JwtCookie = 'JwtCookie';
     const getJwtCookie = () => {
         return Cookies.get(JwtCookie);
@@ -50,13 +52,27 @@ const Header = () => {
                 }
                 )
                 .then((res)=>{
-                    console.log(res.data);
+                    searchItemList(res)
+                    // console.log(res.data);
                 })
                 .catch(err=>{
                     console.log(err);
                 })
         }
     }, [debouncedSearch]);
+
+    const searchItemList = (res) => {
+
+        if(res.data.length === 0){
+            console.log("상품 목록 조회 실패")
+            setSearch(null)
+        }
+        else{
+            setSearch(res.data);
+        }
+        nav('/items')
+    }
+
     const pageHandler = (path)=>{
       nav(`/${path}`);
     }
