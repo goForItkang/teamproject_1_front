@@ -115,6 +115,31 @@
 /*    margin-right: auto; !* 마지막 줄에서 왼쪽 정렬 유지 *!*/
 /*}*/
 
+.no-item-container{
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    justify-content:center;
+
+    height:500px;
+    width:100%;
+    background-color:white;
+    border-radius:30px;
+
+    gap:40px;
+}
+.no-item-container__font1{
+    font-size:16px;
+    font-weight: bold;
+}
+
+.no-item-container__content{
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    justify-content:center;
+}
+
 .item-container{
     display: flex;
     flex-direction: column;
@@ -134,6 +159,7 @@
     /*flex: 1;*/
     border-radius:30px;
 }
+
 
 .item-container:hover {
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);

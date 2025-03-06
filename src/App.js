@@ -14,6 +14,8 @@ import ItemList, {SearchContextProvider} from "./page/ItemList";
 import ItemDetail from "./page/ItemDetail"
 import ItemEdit from "./page/ItemEdit";
 import ForgotPassword from "./page/ForgotPassword";
+import BeforeItemDetail from "./page/BeforeItemDetail";
+import ItemReview from "./page/ItemReview";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
                         <Route path={"/user/password"} element={<ForgotPassword/>}/>
                         <Route path={"/items"} element={<ItemList/>}/>
                         <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
+                        <Route path={"/item/:itemId/review"} element={<ItemReview/>}/>
+                        <Route path={"/before/item/:itemId"} element={<BeforeItemDetail/>}/>
                 </Routes>
             </SearchContextProvider>
         </BrowserRouter>

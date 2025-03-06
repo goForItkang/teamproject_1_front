@@ -7,7 +7,7 @@ import MainHomeMenu from "./MainHomeMenu";
 import {useNavigate} from "react-router-dom";
 import {SearchContext} from "../page/ItemList";
 const Header = () => {
-    const { setSearch } = useContext(SearchContext);
+    const { setSearch,setSearchContent } = useContext(SearchContext);
     const JwtCookie = 'JwtCookie';
     const getJwtCookie = () => {
         return Cookies.get(JwtCookie);
@@ -70,6 +70,8 @@ const Header = () => {
         else{
             setSearch(res.data);
         }
+
+        setSearchContent(debouncedSearch);
         nav('/items')
     }
 

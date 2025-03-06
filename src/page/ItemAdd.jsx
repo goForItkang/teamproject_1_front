@@ -22,15 +22,23 @@ const ItemForm = () => {
         itemBrand: '',
         category: '',
         imageFile: null,
+        itemDetailImages: []
     });
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
-        if (type === 'file') {
-            setFormData({
-                ...formData,
-                [name]: files[0],
-            });
+        if (type === "file") {
+            if (name === "imageFile") {
+                setFormData({
+                    ...formData,
+                    [name]: files[0], // 대표 이미지 (단일 파일)
+                });
+            } else if (name === "itemDetailImages") {
+                setFormData({
+                    ...formData,
+                    itemDetailImages: Array.from(files), // 여러 개의 상세 이미지 파일 배열로 변환
+                });
+            }
         } else {
             setFormData({
                 ...formData,
@@ -53,6 +61,17 @@ const ItemForm = () => {
         form.append('itemBrand', formData.itemBrand);
         form.append('category', formData.category);
         form.append('imageFile', formData.imageFile);
+
+        // const inputItemDetailImages = formData.itemDetailImages.map((file, index) => ({
+        //     imageIndex: index + 1,
+        //     imageFile:file.name
+        // }));
+        //
+        // form.append("itemDetailImages", new Blob([JSON.stringify(inputItemDetailImages)], { type: "application/json" }));
+
+        formData.itemDetailImages.forEach((file) => {
+            form.append("itemDetailImages", file);
+        });
 
         try {
             const response = await createItem(form);
@@ -147,13 +166,17 @@ const ItemForm = () => {
                 </select>
             </div>
             <div className={styles.formGroup}>
-                <label>상품 이미지 파일</label>
+                <label>상품 프로필 이미지 파일</label>
                 <input
                     type="file"
                     name="imageFile"
                     onChange={handleChange}
                     required
                 />
+            </div>
+            <div className={styles.formGroup}>
+                <label>상품 상세 이미지 파일 (여러 개 선택 가능)</label>
+                <input type="file" name="itemDetailImages" multiple onChange={handleChange}/>
             </div>
             <button type="submit" className={styles.submitButton}>상품 등록</button>
         </form>

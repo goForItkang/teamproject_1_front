@@ -146,9 +146,22 @@ export const ItemsForm = () => {
 }
 
 const NoItems = () =>{
+    const { searchContent } = useContext(SearchContext);
+
+    console.log('search : ' + searchContent);
     return(
-        <div>
-            아이템 조회 실패
+        <div className={styles['no-item-container']}>
+            <div className={styles['no-item-container__font1']}>
+                '{searchContent}'에 대한 검색 결과가 없습니다.
+            </div>
+            <div className={styles['no-item-container__content']}>
+                <div className={styles['no-item-container__font2']}>
+                    해당 상품이 품절되었거나 등록되지 않았습니다.
+                </div>
+                <div className={styles['no-item-container__font2']}>
+                    다른 키워드로 검색해 주세요.
+                </div>
+            </div>
         </div>
     )
 }
@@ -271,9 +284,10 @@ export const SearchContext = createContext(null)
 export const SearchContextProvider = (props) => {
 
     const [search, setSearch] = useState('');
+    const [searchContent, setSearchContent] = useState('');
 
     return (
-        <SearchContext.Provider value={{search, setSearch}}>
+        <SearchContext.Provider value={{search, setSearch, searchContent, setSearchContent}}>
             {props.children}
         </SearchContext.Provider>
     )
