@@ -6,6 +6,7 @@
     "@stomp/stompjs": "^7.0.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "fslightbox-react": "^1.7.6",
     "http-proxy-middleware": "^3.0.3",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

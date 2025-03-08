@@ -1,11 +1,11 @@
 import styles from '../css/itemDetail.module.css';
-import {Link, useParams} from "react-router-dom";
-import React, {createContext, useContext, useEffect, useState} from "react";
+import { useParams} from "react-router-dom";
+import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import {getItem} from "../api/ItemApi";
-import {getItemComments} from "../api/CommentApi";
-import {SearchContext} from "./ItemList";
+import {getChildComments, getItemComments} from "../api/CommentApi";
 import {deleteLike, getLikes, postLike} from "../api/LikeApi";
-import {FaRegThumbsUp, FaThumbsUp} from "react-icons/fa";
+import {LightBox} from "../component/LightBox";
+
 
 const ItemDetail = () => {
     return (
@@ -13,9 +13,12 @@ const ItemDetail = () => {
             <ItemContextProvider>
                 <ItemCountContextProvider>
                     <div className={styles.body}>
-                        <BuyItemContainer/>
-                        <ItemDetailAndReviewContainer/>
+                        <div className={styles['item-container']}>
+                            <BuyItemContainer/>
+                            <ItemDetailAndReviewContainer/>
+                        </div>
                     </div>
+
                 </ItemCountContextProvider>
             </ItemContextProvider>
         </>
@@ -132,12 +135,13 @@ const ItemEvaluate = ({item}) => {
             </div>
 
             <div className={styles['item-evaluate__recommend']}>
-                <div>
-                    리뷰
-                </div>
-                <div>
-                    {item.commentCount}
-                </div>
+                리뷰 {item.commentCount}
+                {/*<div>*/}
+                {/*    리뷰*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                {/*    {item.commentCount}*/}
+                {/*</div>*/}
             </div>
         </div>
     )
@@ -276,7 +280,7 @@ const ItemCountAndPrice = () => {
 
 const ItemDetailAndReviewContainer = () => {
 
-    const [select, setSelect] = useState(-1)
+    const [select, setSelect] = useState(0)
 
     const menuItems = [
         {name:'상세 정보'},
@@ -331,14 +335,19 @@ const ItemDetailImages = () => {
 
     const { item, setItem } = useContext(ItemContext);
 
-    const images = item.itemDetailImages
+    if(!item){
+        return(
+            <></>
+        )
+    }
+
 
     return(
         <>
-            <div>
+            <div className={styles['image-detail-container']}>
                 {
-                    images.map((image, index) => (
-                        <div className={styles['image-detail-container']}>
+                    item.itemDetailImages.map((image, index) => (
+                        <div>
                             <img
                                 className={styles['image-detail']}
                                 src={image.imageUrl}
@@ -377,14 +386,11 @@ const Review = () =>{
 
                 {
                     comments.map((comment, index) => (
-                    comment.rating !== null ?
+                    comment.rating !== null &&
                     <CommentParent
                         comment = {comment}
                     />
-                        :
-                    <CommentChild
-                        comment={comment}
-                    />
+
                     ))
                 }
 
@@ -393,23 +399,45 @@ const Review = () =>{
     )
 }
 
-const CommentChild = ({comment}) => {
+const CommentChild = ({parentId}) => {
+    const [comments, setComments] = useState([])
+
+    const getComments = async(parentId) => {
+        const children = await getChildComments(parentId);
+        setComments(children)
+        console.table(children)
+        // setChildComments(prevState => ({
+        //     ...prevState,
+        //     [parentId]: children
+        // }));
+    }
+
+    useEffect(() => {
+        getComments(parentId)
+    },[])
+
+
     return(
         <>
-            <div className={styles['comment-child']}>
-                <div>
-                    {comment.username}
-                </div>
-                <div className={styles['comment-child__content']}>
-                    {comment.content}
-                </div>
-            </div>
+
+            {
+                comments.map((comment,index) => (
+                    <div className={styles['comment-child']}>
+                        <div>
+                            {comment.username}
+                        </div>
+                        <div className={styles['comment-child__content']}>
+                            {comment.content}
+                        </div>
+                    </div>
+                ))
+            }
         </>
     )
 }
 
 const CommentParent = ({comment}) => {
-    console.table(comment)
+    // console.table(comment)
     // console.log(comment.commentImages[0])
     const date = new Date(comment.created_date);
     const formattedDate = `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, '0')}. ${String(date.getDate()).padStart(2, '0')}`;
@@ -417,54 +445,63 @@ const CommentParent = ({comment}) => {
 
     return(
         <>
-            <div className={styles['comment-parent']}>
-                <div className={styles['comment-parent__container']}>
-                    <div className={styles['comment-parent__user-detail']}>
-                        <div>
-                            <div className={styles['comment-parent__user-detail--menu1']}>
-                                <div className={styles['comment-parent__user-detail--username']}>
-                                    {comment.username}
-                                </div>
-                                <div className={styles['comment-parent__user-detail--review-container']}>
-                                    <img
-                                        className={styles['comment-parent__user-detail--review-icon']}
-                                        src={'/images/-icon-star.svg'}
-                                    />
-                                    <div className={styles['comment-parent__user-detail--review-value']}>
-                                        {comment.rating}
+            <div>
+                <div className={styles['comment-parent']}>
+                    <div className={styles['comment-parent__container']}>
+                        <div className={styles['comment-parent__user-detail']}>
+                            <div>
+                                <div className={styles['comment-parent__user-detail--menu1']}>
+                                    <div className={styles['comment-parent__user-detail--username']}>
+                                        {comment.username}
+                                    </div>
+                                    <div className={styles['comment-parent__user-detail--review-container']}>
+                                        <img
+                                            className={styles['comment-parent__user-detail--review-icon']}
+                                            src={'/images/-icon-star.svg'}
+                                        />
+                                        <div className={styles['comment-parent__user-detail--review-value']}>
+                                            {comment.rating}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className={styles['comment-parent__user-detail--menu2']}>
-                                <div className={styles['comment-parent__user-detail--content-value']}>
-                                    {comment.content}
+                                <div className={styles['comment-parent__user-detail--menu2']}>
+                                    <div className={styles['comment-parent__user-detail--content-value']}>
+                                        {comment.content}
+                                    </div>
                                 </div>
+
                             </div>
 
+                            <div className={styles['comment-parent__user-detail--menu3']}>
+                                <div className={styles['comment-parent__user-detail--created-value']}>
+                                    등록일 {formattedDate}
+                                </div>
+
+                                <Like
+                                    commentId={comment.id}
+                                />
+                            </div>
                         </div>
+                        {
+                            comment.commentImages !== null && comment.commentImages.length > 0 &&
 
-                        <div className={styles['comment-parent__user-detail--menu3']}>
-                            <div className={styles['comment-parent__user-detail--created-value']}>
-                                등록일 {formattedDate}
-                            </div>
-
-                            <Like
-                                commentId={comment.id}
+                            <LightBox
+                                imageUrls={comment.commentImages.map((commentImage) => commentImage.imageUrl)}
                             />
-                        </div>
+
+                        }
                     </div>
-                    {
-                        comment.commentImages !== null && comment.commentImages.length > 0 &&
-                        <img
-                            className={styles['comment-parent__picture']}
-                            src={comment.commentImages[0].imageUrl}
-                        />
-                    }
                 </div>
+
+                <CommentChild
+                    parentId={comment.id}
+                />
             </div>
         </>
     )
 }
+
+
 
 const Like = ({commentId}) => {
     // console.log("commentId : " + commentId)
@@ -550,6 +587,7 @@ export const ItemContextProvider = (props) => {
         </ItemContext.Provider>
     )
 }
+
 
 
 export default ItemDetail
