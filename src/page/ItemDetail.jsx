@@ -5,6 +5,7 @@ import {getItem} from "../api/ItemApi";
 import {getChildComments, getItemComments} from "../api/CommentApi";
 import {deleteLike, getLikes, postLike} from "../api/LikeApi";
 import {LightBox} from "../component/LightBox";
+import {createCart} from "../api/CartApi";
 
 
 const ItemDetail = () => {
@@ -205,7 +206,27 @@ const ItemQuantityButton = () => {
 }
 
 const ItemBuyButtons = () => {
+    const { itemCount } = useContext(ItemCountContext);
+    const { item } = useContext(ItemContext);
 
+    const addCart = async () =>{
+
+
+        const cart = {
+            itemId : item.id,
+            quantity: itemCount
+        }
+
+        const response = await createCart(cart)
+
+        if(!response.ok){
+            alert("장바구니 넣기 실패");
+            return;
+        }
+
+        alert("장바구니 넣기 성공");
+
+    }
 
     const isSubmitPossible = () => {
         return true
@@ -217,6 +238,7 @@ const ItemBuyButtons = () => {
             <Button
                 isSubmitPossible={isSubmitPossible}
                 buttonName="장바구니"
+                onClick = {() => addCart()}
             />
 
             <Button
@@ -232,7 +254,7 @@ const ItemBuyButtons = () => {
     )
 }
 
-const Button = ({isSubmitPossible, buttonName}) => {
+const Button = ({isSubmitPossible, buttonName, onClick = () => {} }) => {
 
     const submitStyle = () => {
         if(isSubmitPossible() === true) return "item-detail__button--able"
@@ -242,7 +264,10 @@ const Button = ({isSubmitPossible, buttonName}) => {
 
 
     return (
-        <button type = "submit" className={styles[submitStyle()]}>
+        <button type = "submit"
+                className={styles[submitStyle()]}
+                onClick={onClick}
+        >
             <b className={styles['item-detail__button--font']}>{buttonName}</b>
         </button>
     )

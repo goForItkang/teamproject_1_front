@@ -16,6 +16,7 @@ import ItemEdit from "./page/ItemEdit";
 import ForgotPassword from "./page/ForgotPassword";
 import BeforeItemDetail from "./page/BeforeItemDetail";
 import ItemReview from "./page/ItemReview";
+import Cart from "./page/Cart";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                         <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
                         <Route path={"/item/:itemId/review"} element={<ItemReview/>}/>
                         <Route path={"/before/item/:itemId"} element={<BeforeItemDetail/>}/>
+                        <Route path={"/cart"} element={<Cart/>}/>
                 </Routes>
             </SearchContextProvider>
         </BrowserRouter>
