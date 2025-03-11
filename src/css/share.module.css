@@ -1,0 +1,150 @@
+.share-icon{
+    max-width:40px;
+    /*height:40px;*/
+    cursor:pointer
+}
+
+.share-container{
+    position:fixed;
+    width:100%;
+    height:100%;
+    /*width:0;*/
+    /*height:0;*/
+    top:0;
+    left:0;
+
+    background-color:var(--color-dark-gray);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.share-box{
+    display:flex;
+    flex-direction:column;
+
+    /*justify-content:center;*/
+    /*justify-content:space-between;*/
+    /*align-items:center;*/
+
+    width:450px;
+    min-height:214px;
+
+    /*height:30%;*/
+    /*width:30%;*/
+
+    background-color:white;
+
+    border-radius:20px;
+}
+
+.share-box__title{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:100%;
+    height:40px;
+
+    font-size:20px;
+    font-weight:bold;
+
+    border-bottom:2px solid var(--color-gainsboro);
+
+    position: relative;
+}
+
+.share-box__close{
+    /*margin-left: auto; !* 아이콘을 오른쪽 끝으로 밀기 *!*/
+    cursor: pointer;
+    position: absolute;
+    right:20px;
+}
+
+.share-box__body{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100px;
+    /*height:1000px;*/
+
+    box-sizing: border-box;
+    padding:10px 0 20px 0;
+
+    gap:10px;
+}
+
+.share-box__img{
+    width:100px;
+    height:100px;
+    object-fit:contain;
+}
+
+.share-box__item-container{
+    display:flex;
+    /*justify-content:center;*/
+    align-items:center;
+    width:100%;
+
+    padding:0 0 0 20px;
+
+    gap:10px;
+}
+
+.share-box__button-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.share-box__button-link{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:140px;
+    height:30px;
+
+    background-color:white;
+    border-radius:30px;
+    border:2px solid var(--color-gainsboro);
+
+    gap:3px;
+
+    font-size:13px;
+
+    cursor:pointer;
+}
+
+.share-box__button-kakao{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:140px;
+    height:30px;
+
+    background-color:#F7E509;
+    border-radius:30px;
+    /*border:2px solid var(--color-gainsboro);*/
+    border:none;
+
+    gap:3px;
+
+    font-size:13px;
+    color:black;
+
+    cursor:pointer;
+}
+
+.share-box__name-font{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.test{
+    width:0;
+    height:0;
+    overflow:hidden;
+}

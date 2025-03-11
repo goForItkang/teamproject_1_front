@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;  /* 화면 너비에 맞게 설정 */
     height: 100vh;  /* 화면 높이에 맞게 설정 */
-    background-color: rgba(128, 128, 128, 0.7); /* 불투명한 회색 (70% 불투명) */
+    background-color: var(--color-dark-gray); /* 불투명한 회색 (70% 불투명) */
     z-index: 9999;  /* 다른 요소보다 위에 보이도록 설정 */
 
     display:flex;

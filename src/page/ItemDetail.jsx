@@ -6,6 +6,7 @@ import {getChildComments, getItemComments} from "../api/CommentApi";
 import {deleteLike, getLikes, postLike} from "../api/LikeApi";
 import {LightBox} from "../component/LightBox";
 import {createCart} from "../api/CartApi";
+import {ShareButton} from "../component/Share";
 
 
 const ItemDetail = () => {
@@ -246,9 +247,12 @@ const ItemBuyButtons = () => {
                 buttonName="구매"
             />
 
-            <img
-                className={styles['item-button-share']}
-                src={'/images/-icon-share.svg'}
+            {/*<img*/}
+            {/*    className={styles['item-button-share']}*/}
+            {/*    src={'/images/-icon-share.svg'}*/}
+            {/*/>*/}
+            <ShareButton
+                item={item}
             />
         </div>
     )
