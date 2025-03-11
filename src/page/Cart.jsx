@@ -1,24 +1,67 @@
 
-import React, {createContext, useContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import {deleteCart, getCartAll, patchCart} from "../api/CartApi";
 import styles from "../css/cart.module.css"
+import {useLocation, useNavigate} from "react-router-dom";
+import {getItemList} from "../api/ItemApi";
+import {SearchContext} from "./ItemList";
+import {useInView} from "react-intersection-observer";
 
-const Cart = () => {
+const Main =() => {
     return(
         <>
             <CartContextProvider>
-                <div className={styles.container}>
-                    <div className={styles.title}>
-                        장바구니
-                    </div>
-                    <div className={styles.body}>
-                        <CartForm/>
-                        {/*<div className={styles['order-form__blank']}>*/}
-                        {/*</div>*/}
-                        <OrderForm/>
-                    </div>
-                </div>
+                <Cart/>
             </CartContextProvider>
+        </>
+    )
+}
+
+const Cart = () => {
+    const {carts, setCarts} = useContext(CartContext);
+    const [isEmpty, setIsEmpty] = useState(false)
+    const [one, setOne] = useState(false)
+
+    const setIsEmptyHandle =() => {
+        if(!carts || carts.length === 0){
+            return true
+        }
+        const isNotEmpty = carts.some((cart) => cart.quantity > 0)
+        return !isNotEmpty
+    }
+
+    useEffect(() => {
+        if(one === false){
+            setOne(true)
+        }
+        else setIsEmpty(setIsEmptyHandle())
+
+    },[carts])
+
+    return(
+        <>
+            <div className={styles.container}>
+                <div className={styles.title}>
+                    장바구니
+                </div>
+                <div className={styles.body}>
+
+                     {/*<>*/}
+                     {/*    <CartForm/>*/}
+                     {/*    <OrderForm/>*/}
+                     {/*</>*/}
+                    {
+                        isEmpty === false ?
+                        (<>
+                            <CartForm/>
+                            <OrderForm/>
+                        </>)
+                        :
+                            <NoCartForm/>
+
+                    }
+                </div>
+            </div>
         </>
     )
 }
@@ -36,24 +79,69 @@ export const CartContextProvider = (props) => {
     )
 }
 
+const NoCartForm = () => {
+    const navigate = useNavigate()
+
+    const moveToMain = () => {
+        navigate('/')
+    }
+
+    return (
+        <>
+            <div className={styles['none-container']}>
+                <div className={styles['none__menu1']}>
+                    <div className={styles['none__font1']}>
+                        장바구니가 비어 있습니다.
+                    </div>
+                    <div className={styles['none__font2']}>
+                        마음에 드는 상품을 담아 쇼핑을 시작해 보세요!
+                    </div>
+                </div>
+                <button
+                    className={styles['none__button']}
+                    onClick={() => moveToMain()}
+                >
+                    쇼핑 시작하기
+                </button>
+            </div>
+        </>
+    )
+}
+
 const CartForm = () => {
     const {carts, setCarts} = useContext(CartContext);
     const {isCheckedArray, setIsCheckedArray} = useContext(CartContext);
+    const [isNoCart, setIsNoCart] = useState(false)
+
+    const size = 10
+    const pageRef = useRef(1);
+
+    const { ref, inView } = useInView({
+        threshold: 0.5, // 화면의 50%가 보일 때 감지
+    });
+
+    useEffect(() => {
+        if(inView && isNoCart === false){
+            setCartsHandle()
+        }
+    },[inView])
 
 
-
-    const getCarts = async() => {
-        const response = await getCartAll(10,1)
+    const setCartsHandle = async() => {
+        const response = await getCartAll(size,pageRef.current)
 
         if(!response.ok){
-            alert("장바구니 상품 조회 실패")
+            // alert("장바구니 상품 조회 실패")
             return
         }
 
         const data = await response.json();
-        setCarts(data);
+        setCarts((prevCarts) => [...prevCarts, ...data]);
         setIsCheckedArraySize(data.length)
-        // console.table(data)
+        pageRef.current++
+        if(data.length < size){
+            setIsNoCart(true)
+        }
     }
 
     const setIsCheckedArraySize = (newArraySize) => {
@@ -65,20 +153,6 @@ const CartForm = () => {
             return newArray;
         });
     }
-
-
-
-    useEffect(() => {
-        getCarts()
-    },[])
-
-    useEffect( () => {
-        if(carts.length === 0){
-            return
-        }
-
-        setIsCheckedArraySize()
-    }, [carts])
 
     return (
         <>
@@ -93,7 +167,7 @@ const CartForm = () => {
                         </>
                     ))
                 }
-                <div className={styles['item-blank']}>
+                <div className={styles['item-blank']} ref={isNoCart === true ? null : ref}>
 
                 </div>
 
@@ -101,6 +175,7 @@ const CartForm = () => {
         </>
     )
 }
+
 
 const ItemComponent = ({index}) => {
     const {carts} = useContext(CartContext);
@@ -433,4 +508,4 @@ const SubmitButton = ({isSubmitPossible=() => false, buttonName, onClick=()=>nul
 }
 
 
-export default Cart;
+export default Main;
