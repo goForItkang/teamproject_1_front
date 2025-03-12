@@ -7,6 +7,7 @@ import {deleteLike, getLikes, postLike} from "../api/LikeApi";
 import {LightBox} from "../component/LightBox";
 import {createCart} from "../api/CartApi";
 import {ShareButton} from "../component/Share";
+import {useInView} from "react-intersection-observer";
 
 
 const ItemDetail = () => {
@@ -221,7 +222,7 @@ const ItemBuyButtons = () => {
         const response = await createCart(cart)
 
         if(!response.ok){
-            alert("장바구니 넣기 실패");
+            alert("장바구니에 이미 있습니다");
             return;
         }
 
@@ -390,24 +391,31 @@ const ItemDetailImages = () => {
 }
 
 const Review = () =>{
-
+    const size = 10;
+    const pageRef = new useRef(1)
+    const [isCommentEmpty, setIsCommentEmpty] = useState(false)
     const {itemId} = useParams();
     const [comments, setComments] = useState([]);
 
+    const fetchComments = async () => {
+        const itemComments = await getItemComments(itemId, size, pageRef.current);
+        setComments((prevComments) => [...prevComments, ...itemComments]);
+        if(itemComments.length < size){
+            setIsCommentEmpty(true)
+        }
+        pageRef.current++
+    };
+
+
+    const { ref, inView } = useInView({
+        threshold: 0.5, // 화면의 50%가 보일 때 감지
+    });
+
     useEffect(() => {
-        const fetchComments = async () => {
-            const itemComments = await getItemComments(itemId);
-            setComments(itemComments);
-            console.table(itemComments)
-            // console.log('comment.length : ' + itemComments.length)
-        };
-
-        fetchComments();
-    }, [itemId]);
-
-    const sort = (itemComments) => {
-
-    }
+        if(inView && isCommentEmpty === false){
+            fetchComments()
+        }
+    }, [inView])
 
     return(
         <>
@@ -422,6 +430,12 @@ const Review = () =>{
 
                     ))
                 }
+                <div
+                    className={styles['blank']}
+                    ref={isCommentEmpty === false ? ref : null}
+                >
+
+                </div>
 
             </div>
         </>
@@ -434,7 +448,6 @@ const CommentChild = ({parentId}) => {
     const getComments = async(parentId) => {
         const children = await getChildComments(parentId);
         setComments(children)
-        console.table(children)
         // setChildComments(prevState => ({
         //     ...prevState,
         //     [parentId]: children

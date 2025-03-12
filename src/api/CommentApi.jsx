@@ -75,8 +75,8 @@ export const createParentComment = async (itemId, commentForm) => {
 //     }
 // };
 
-export const getItemComments = async (itemId) => {
-    const ENDPOINT = `/api/item/${itemId}/comments`
+export const getItemComments = async (itemId, size, page) => {
+    const ENDPOINT = `/api/item/${itemId}/comments?size=${size}&page=${page}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'GET',

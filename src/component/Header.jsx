@@ -5,9 +5,7 @@ import {getItem} from "../api/ItemApi";
 import Cookies from "js-cookie";
 import MainHomeMenu from "./MainHomeMenu";
 import {useNavigate} from "react-router-dom";
-import {SearchContext} from "../page/ItemList";
 const Header = () => {
-    const { setSearch,setSearchContent } = useContext(SearchContext);
     const JwtCookie = 'JwtCookie';
     const getJwtCookie = () => {
         return Cookies.get(JwtCookie);
@@ -65,14 +63,12 @@ const Header = () => {
 
         if(res.data.length === 0){
             console.log("상품 목록 조회 실패")
-            setSearch(null)
         }
         else{
-            setSearch(res.data);
         }
-
-        setSearchContent(debouncedSearch);
-        nav('/items')
+        //href 사용 이유 : ItemList 페이지에서 navigate 사용하면 상품 리랜더링이 안됨
+        window.location.href = `/items?search=${debouncedSearch}`;
+        // nav(`/items?search=${debouncedSearch}`)
     }
 
     const pageHandler = (path)=>{

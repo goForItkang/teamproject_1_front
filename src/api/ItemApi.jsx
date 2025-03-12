@@ -104,9 +104,10 @@ export const updateItem = async (itemForm) => {
 };
 
 //
-export const getItemList = async (size, page, sort) => {
+export const getItemList = async (size, page, search,sort) => {
     // sort = new, cheap, expensive, review, recommend
-    const ENDPOINT = `/api/item?size=${size}&page=${page}&sort=${sort}`
+    console.log("search : " + search)
+    const ENDPOINT = `/api/item?size=${size}&page=${page}&search=${search}&sort=${sort}`
     try {
         const response = await fetch(`${BASE_URL}${ENDPOINT}`,{
             method: 'GET',

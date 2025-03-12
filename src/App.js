@@ -22,26 +22,24 @@ function App() {
   return (
     <div>
         <BrowserRouter>
-            <SearchContextProvider>
-                <Header></Header>
-                <Routes>
-                        <Route path="/" element={<Main />} />
-                        <Route path="/chat/:userName" element={<Chat/>}/>
-                        <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/signup"} element={<Signup/>}/>
-                        <Route path={"/shop"} element={<Shop/>}/>
-                        <Route path={"/admin/*"} element={<AdminHome/>}/>
-                        <Route path={"/admin/item/add"} element={<ItemAdd/>}/>
-                        <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
-                        <Route path={"/user/profile/edit"} element={<Profile/>}/>
-                        <Route path={"/user/password"} element={<ForgotPassword/>}/>
-                        <Route path={"/items"} element={<ItemList/>}/>
-                        <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
-                        <Route path={"/item/:itemId/review"} element={<ItemReview/>}/>
-                        <Route path={"/before/item/:itemId"} element={<BeforeItemDetail/>}/>
-                        <Route path={"/cart"} element={<Cart/>}/>
-                </Routes>
-            </SearchContextProvider>
+            <Header></Header>
+            <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/chat/:userName" element={<Chat/>}/>
+                    <Route path={"/login"} element={<Login/>}/>
+                    <Route path={"/signup"} element={<Signup/>}/>
+                    <Route path={"/shop"} element={<Shop/>}/>
+                    <Route path={"/admin/*"} element={<AdminHome/>}/>
+                    <Route path={"/admin/item/add"} element={<ItemAdd/>}/>
+                    <Route path={"/admin/item/edit/:id"} element={<ItemEdit/>}/>
+                    <Route path={"/user/profile/edit"} element={<Profile/>}/>
+                    <Route path={"/user/password"} element={<ForgotPassword/>}/>
+                    <Route path={"/items"} element={<ItemList/>}/>
+                    <Route path={"/item/:itemId"} element={<ItemDetail/>}/>
+                    <Route path={"/item/:itemId/review"} element={<ItemReview/>}/>
+                    <Route path={"/before/item/:itemId"} element={<BeforeItemDetail/>}/>
+                    <Route path={"/cart"} element={<Cart/>}/>
+            </Routes>
         </BrowserRouter>
     </div>
   );

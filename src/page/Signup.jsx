@@ -54,6 +54,7 @@ const SignupForm = () => {
         checkedCurrentPassword();
     }, [currentPassword, password]);
 
+
     const checkedCurrentPassword = () => {
         // console.log("currentPassword : " + currentPassword)
         if(currentPassword !== "" && password !== currentPassword){
@@ -203,7 +204,7 @@ const SignupForm = () => {
                             onChange={setCurrentPassword}
                         />
                         <InputName
-                            onChange={setUsername}
+                            onChange={(e) => setUsername(e)}
                         />
                         {/*<InputBirthday*/}
                         {/*    onChange={setBirthday}*/}

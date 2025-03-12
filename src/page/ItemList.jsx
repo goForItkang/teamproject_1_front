@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {getItemList} from "../api/ItemApi";
 import styles from '../css/itemList.module.css';
-import {Link, useLocation, useNavigate} from "react-router-dom";  // CSS 모듈 import
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";  // CSS 모듈 import
 
 
 const ItemList = () => {
@@ -19,7 +19,7 @@ const ItemList = () => {
 
 export const ItemsForm = () => {
     // const {sortRef} = useContext(MenuSortContext)
-    const { search, setSearch } = useContext(SearchContext);
+    // const { search,searchContent, setSearchContent } = useContext(SearchContext);
     const [items, setItems] = useState([]);  // 상품 리스트 상태
     const [page, setPage] = useState(1);  // 현재 페이지 상태
     const [size, setSize] = useState(10);  // 페이지당 아이템 개수 (기본값 10)
@@ -28,6 +28,7 @@ export const ItemsForm = () => {
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+    const search = searchParams.get('search')
     const sort = searchParams.get('sort');
 
     // page의 최신 값을 저장할 ref
@@ -35,15 +36,14 @@ export const ItemsForm = () => {
     const sortRef = useRef(sort);
     const target = useRef(null);
 
-    const reloadItem =  () => {
-        setPage(1)
-        setItems([])
-    }
-
-
-    useEffect(() => {
-        reloadItem()
-    }, [sort]);
+    // const reloadItem =  () => {
+    //     setPage(1)
+    //     setItems([])
+    // }
+    //
+    // useEffect(() => {
+    //     reloadItem()
+    // }, [sort]);
 
 
     // page가 변경될 때마다 ref 업데이트
@@ -58,66 +58,35 @@ export const ItemsForm = () => {
 
 
 
-
-    // IntersectionObserver 콜백 함수에서 최신 page 값 사용
     const callback = async () => {
-        //useState X (비동기 상황에서 값이 함수에 따라 달라 질 수 있음
-
-        const data = await getItemList(size, pageRef.current, sortRef.current);
+        const data = await getItemList(size, pageRef.current, search,sortRef.current);
         if(data === false){
+            if(pageRef.current === 1){
+                setIsNoItem(true)
+            }
             return
         }
 
-        // if(response.length === 0){
-        //     // observer.current.disconnect();
-        //     return
-        // }
         setItems((prevItems) => [...prevItems, ...data]);
         setPage(prev => prev + 1); // 함수형 업데이트로 최신 값 기반으로 증가
     };
-
 
 
     const options = {
         threshold: 1.0,
     };
 
-    // observer는 useRef로 관리
+
     const observer = useRef(new IntersectionObserver(callback, options));
 
-
     useEffect(() => {
-        if(search === null){
-            setIsNoItem(true)
-        }
-
-
-        else if (target.current) {
-            // observer가 초기화된 후 observe 호출
-            //target.current 감지
+        if (target.current) {
             observer.current.observe(target.current);
         }
 
-        // cleanup function: unobserve를 호출하여 메모리 누수를 방지
-        // return () => {
-        //     if (target.current) {
-        //         observer.current.unobserve(target.current);
-        //     }
-        // };
     }, []);
 
-    useEffect(() => {
-        if(search === null){
-            setIsNoItem(true)
-        }
 
-        else if(search.length !== 0){
-            setIsNoItem(false)
-            setItems(search)
-            setSearch('');
-        }
-
-    }, [search]);
 
     return(
         <>
@@ -134,7 +103,9 @@ export const ItemsForm = () => {
                     ))
                     }
 
+                    {/*<div className={styles.items__loading} ref={searchContent && searchContent.length > 0 ? null : target}>*/}
                     <div className={styles.items__loading} ref={target}>
+
                         {/* 스크롤 이벤트를 감지할 대상 요소 */}
                     </div>
                 </div>
@@ -146,13 +117,15 @@ export const ItemsForm = () => {
 }
 
 const NoItems = () =>{
-    const { searchContent } = useContext(SearchContext);
+    // const { search } = useContext(SearchContext);
 
-    console.log('search : ' + searchContent);
+    const [searchParams] = useSearchParams();
+    const search = searchParams.get("search");
+
     return(
         <div className={styles['no-item-container']}>
             <div className={styles['no-item-container__font1']}>
-                '{searchContent}'에 대한 검색 결과가 없습니다.
+                '{search}'에 대한 검색 결과가 없습니다.
             </div>
             <div className={styles['no-item-container__content']}>
                 <div className={styles['no-item-container__font2']}>
@@ -216,23 +189,40 @@ const MenuSorting = () => {
         { name: '최소 금액순', post: 'cheap', isFocused: false },
         { name: '최대 금액순', post: 'expensive', isFocused: false }
     ];
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
 
-    const [select, setSelect] = useState(-1);
+    const select = searchParams.get('sort')
+    const [selectIndex, setSelectIndex] = useState(-1)
 
+    const getSelectIndex = () => {
+        return menuItems.findIndex(menu => menu.post === select);
+    }
+    useEffect(() => {
+        setSelectIndex(getSelectIndex())
+    }, [searchParams])
+
+    const getUri = (index) => {
+        searchParams.set("sort", menuItems[index].post);
+        return `${location.pathname}?${searchParams.toString()}`
+    }
 
     return (
         <>
             <div className={styles.menu}>
 
-                {menuItems.map((item, index) => (
-                    <Link
+                {
+                    menuItems.map((item, index) => (
+
+
+                    <a
                         key={index}
-                        className={index === select ? styles['menu__item-sort--focused'] : styles['menu__item-sort']}
-                        to = {`/items?sort=${item.post}`}
-                        onClick = {() => setSelect(index)}
+                        className={index === selectIndex ? styles['menu__item-sort--focused'] : styles['menu__item-sort']}
+                        href = {getUri(index)}
+                        // onClick={() => setTimeout(() => window.location.reload(), 1000)}
                     >
                         {item.name}
-                    </Link>
+                    </a>
                 ))}
 
             </div>
@@ -279,19 +269,19 @@ const MenuDelivery = () => {
 }
 
 
-export const SearchContext = createContext(null)
-
-export const SearchContextProvider = (props) => {
-
-    const [search, setSearch] = useState('');
-    const [searchContent, setSearchContent] = useState('');
-
-    return (
-        <SearchContext.Provider value={{search, setSearch, searchContent, setSearchContent}}>
-            {props.children}
-        </SearchContext.Provider>
-    )
-}
+// export const SearchContext = createContext(null)
+//
+// export const SearchContextProvider = (props) => {
+//
+//     const [search, setSearch] = useState('');
+//     const [searchContent, setSearchContent] = useState('');
+//
+//     return (
+//         <SearchContext.Provider value={{search, setSearch, searchContent, setSearchContent}}>
+//             {props.children}
+//         </SearchContext.Provider>
+//     )
+// }
 
 
 export default ItemList;

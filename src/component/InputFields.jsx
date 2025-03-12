@@ -293,6 +293,7 @@ export const InputPassword = ({isFail, placeholder, ...props}) => {
 
 
 export const InputName = ({...props}) => {
+    const inputMaxSize = 20
     const [name, setName] = useState("")
     const [focusName, setFocusName] = useState(false)
 
@@ -302,6 +303,9 @@ export const InputName = ({...props}) => {
     }
 
     const handleChange = (e) =>{
+        if(e.target.value.length > inputMaxSize){
+            return
+        }
         setName(e.target.value)
         props.onChange(e.target.value)
     }
@@ -316,6 +320,7 @@ export const InputName = ({...props}) => {
                 id="username"
                 name="username"
                 placeholder="닉네임"
+                value={name}
                 onFocus={() => setFocusName(true)}
                 onBlur={() => setFocusName(false)}
                 onChange={(e) => handleChange(e)}
