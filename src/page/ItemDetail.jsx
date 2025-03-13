@@ -187,21 +187,29 @@ const ItemQuantityButton = () => {
                 {/*    </div>*/}
                 {/*</button>*/}
 
-                <img
-                    className={styles['item-quantity__input-image']}
-                    src={isMinusEnable === true ? '/images/-icon-minus-fill.svg' : '/images/-icon-minus-none.svg'}
-                    onClick = {() => onClickMinus()}
-                />
+                <div
+                    className={styles['item-quantity_input-image-container']}
+                    onClick={() => onClickMinus()}
+                >
+                    <img
+                        className={styles['item-quantity__input-image']}
+                        src={isMinusEnable === true ? '/images/-icon-minus-fill.svg' : '/images/-icon-minus-none.svg'}
+                    />
+                </div>
 
                 <div className={styles['item-quantity__input-font']}>
                     {itemCount}
                 </div>
 
-                <img
-                    className={styles['item-quantity__input-image']}
-                    src={'/images/-icon-plus-fill.svg'}
+                <div
+                    className={styles['item-quantity_input-image-container']}
                     onClick = {() => onClickPlus()}
-                />
+                >
+                    <img
+                        className={styles['item-quantity__input-image']}
+                        src={'/images/-icon-plus-fill.svg'}
+                    />
+                </div>
             </div>
         </>
     )

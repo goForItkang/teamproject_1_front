@@ -16,10 +16,16 @@ export const LightBox = ({imageUrls}) => {
                     isClick === true &&
                     <div
                         className={styles['light-box-container']}
-                        onClick={() => setIsClick(false)}
+                        // onClick={() => setIsClick(false)}
                     >
                         <FocusImage
                             imageUrls={imageUrls}
+                        />
+
+                        <img
+                            className={styles['light-box__close-icon']}
+                            src={'/images/-icon-close.svg'}
+                            onClick={() => setIsClick(false)}
                         />
                     </div>
                 }
@@ -82,6 +88,7 @@ const PageCircle = ({index = 0, maxIndex}) => {
         <div className={styles['circle-container']}>
             {[...Array(maxIndex + 1)].map((_, i) => (
                 <img
+                    className={styles['circle-icon']}
                     key={i}
                     src={index === i ? '/images/-icon-circle-fill.svg' : '/images/-icon-circle-none.svg'}
                     alt={`circle-${i}`}

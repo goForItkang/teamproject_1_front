@@ -2,7 +2,7 @@
 import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import {deleteCart, getCartAll, patchCart} from "../api/CartApi";
 import styles from "../css/cart.module.css"
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getItemList} from "../api/ItemApi";
 import {SearchContext} from "./ItemList";
 import {useInView} from "react-intersection-observer";
@@ -187,6 +187,10 @@ const ItemComponent = ({index}) => {
         setCart(carts[index])
     },[])
 
+    const getUri = () => {
+        return `/item/${cart.itemId}`
+    }
+
     const onClickChecked = () => {
         setIsChecked(!isChecked)
     }
@@ -221,14 +225,22 @@ const ItemComponent = ({index}) => {
         <>
             <div className={styles['item-component']}>
                 <div className={styles['item']}>
-                    <img
-                        className={styles['item__picture']}
-                        src={cart.itemImg}
-                    />
+                    <Link
+                        className={styles['item__picture-link']}
+                        to = {getUri()}
+                    >
+                        <img
+                            className={styles['item__picture']}
+                            src={cart.itemImg}
+                        />
+                    </Link>
                     <div className={styles['item__detail']}>
-                        <div className={styles['item__detail-menu1']}>
+                        {/*<div className={styles['item__detail-menu1']}>*/}
+                        {/*    {cart.itemName}*/}
+                        {/*</div>*/}
+                        <Link to = {getUri()} className={styles['item__detail-menu1']}>
                             {cart.itemName}
-                        </div>
+                        </Link>
 
                         <div className={styles['item__detail-menu2']}>
                             <div className={styles['item__detail-name-container']}>

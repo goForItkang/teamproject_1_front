@@ -306,8 +306,17 @@
     font-size:14px;
 }
 
-.item-quantity__input-image{
+.item-quantity_input-image-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100%;
     cursor:pointer;
+}
+
+.item-quantity__input-image{
+    /*cursor:pointer;*/
 }
 
 .item-total{
@@ -327,7 +336,7 @@
 }
 
 .item-total__value{
-    font-size:20px;
+    font-size:25px;
     font-weight:bold;
 }
 

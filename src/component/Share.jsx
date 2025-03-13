@@ -36,6 +36,7 @@ const ShareForm = ({item, setIsClick}) => {
 
         // 클립보드에 현재 URL 복사
         navigator.clipboard.writeText(currentUrl).then(() => {
+            alert('링크 복사가 완료되었습니다')
         }).catch((error) => {
             alert("URL 복사 실패: " + error);
         });

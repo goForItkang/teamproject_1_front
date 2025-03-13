@@ -122,6 +122,11 @@
     gap:20px;
 }
 
+.item__picture-link{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
 .item__picture{
     width:150px;
@@ -138,6 +143,8 @@
 
 .item__detail-menu1{
     font-size:16px;
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모 요소의 색상 상속 */
 }
 
 .item__detail-menu2{
@@ -298,7 +305,7 @@
 }
 
 .order__menu3--value{
-    font-size:20px;
+    font-size:25px;
     font-weight:bold;
 }
 
@@ -340,3 +347,8 @@
     height:500px;
     width:250px;
 }
+
+/*.order-price{*/
+/*    font-size:25px;*/
+/*    font-weight:bold;*/
+/*}*/

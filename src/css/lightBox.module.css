@@ -52,3 +52,21 @@
     display: flex;
     gap:10px;
 }
+
+
+.circle-icon{
+    width:10px;
+    height:10px;
+}
+
+.light-box__close-icon{
+    position: fixed;
+
+    width:24px;
+    height:24px;
+
+    right:40px;
+    top:30px;
+
+    cursor:pointer;
+}
