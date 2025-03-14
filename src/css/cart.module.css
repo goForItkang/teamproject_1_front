@@ -88,9 +88,12 @@
 
 .item-container{
     width:813px;
+
     display:flex;
     flex-direction: column;
 
+    height:500px;
+    overflow:auto;
 }
 
 .item-container > * {

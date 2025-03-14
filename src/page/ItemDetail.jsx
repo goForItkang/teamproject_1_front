@@ -229,12 +229,12 @@ const ItemBuyButtons = () => {
 
         const response = await createCart(cart)
 
-        if(!response.ok){
-            alert("장바구니에 이미 있습니다");
-            return;
-        }
-
-        alert("장바구니 넣기 성공");
+        // if(!response.ok){
+        //     alert("장바구니에 이미 있습니다");
+        //     return;
+        // }
+        //
+        // alert("장바구니 넣기 성공");
 
     }
 

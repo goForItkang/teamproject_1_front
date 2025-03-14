@@ -296,9 +296,15 @@ const ItemQuantityButton = ({index}) => {
     },[cart])
 
 
+    const onDeleteClick = () => {
+        if(window.confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?")) {
+            deleteCartHandle(cart.id)
+        }
+    };
+
     const onClickMinus = () => {
         if(itemCount <= 1){
-            deleteCartHandle(cart.id)
+            onDeleteClick()
             return
         }
 
